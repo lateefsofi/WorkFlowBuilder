@@ -1,0 +1,39 @@
+
+getLineData(startCoords, endCoords) {
+  const finalCoords = {
+    svgContainer: {
+      width: Math.abs(endCoords.x - startCoords.x),
+      height: Math.abs(endCoords.y - startCoords.y),
+      left: 0,
+      top: 0
+    },
+    lineStartCoords: {x: 0, y: 0}
+    lineEndCoords: {x: 0, y: 0}
+
+  }
+  //x line coords of start and end point,
+  if(startCoords.x < endCoords.x){
+    //Draw line to the right
+    lineStartCoords.x = 0;
+    lineEndCoords.x = endCoords.x - startCoords.x;
+    svgContainer.left = startCoords.x;
+  } else {
+    // Draw line to the left
+    lineStartCoords.x = startCoords.x - endCoords.x;
+    lineEndCoords.x = 0;
+    svgContainer.left = endCoords.x;
+  }
+
+  // Y line coords of start and end point
+  if(startCoords.y < endCoords.y) {
+    //Draw line below the start point
+    lineStartCoords.y= 0;
+    lineEndCoords.y = endCoords.y - startCoords.y;
+    svgContainer.top = startCoords.y
+  } else {
+    // Draw line above the start point
+    lineStartCoords.y= startCoords.y - endCoords.y;
+    lineEndCoords.y = 0;
+    svgContainer.top = endCoords.y
+  }
+}

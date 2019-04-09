@@ -1,0 +1,84 @@
+.bot-builder-container {
+  position: relative;
+  float: left;
+  width: 10000px;
+  height: 10000px;
+  overflow: scroll;
+  background-image: url('../../assets/images/04_free_subtle_textures_blueprint_texture.jpg');
+  // padding: 20px;
+  svg{
+    z-index: 1;
+    overflow: visible;
+  }
+}
+
+.element-container {
+  border: 1px solid #ccc;
+  width: 250px;
+  min-height: 140px;
+  background-color: #fff;
+  padding: 10px;
+  position: absolute;
+  border: 1px solid transparent;
+  transition: border .2s ease-in-out;
+  z-index: 2;
+  border-radius: 10px;
+  .heading{
+    border-bottom: 1px solid #ccc;
+    height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+    padding-top: 8px;
+    margin-bottom: 8px;
+    &:hover {
+      overflow: visible;
+    }
+  }
+  &:hover{
+    border: 1px solid green;
+  }
+  .options{
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .drag-area{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 92%;
+    height: 100%;
+    background: transparent;
+    cursor: move;
+  }
+}
+
+.connector{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: cadetblue;
+  border-radius: 50px;
+  cursor: pointer;
+  right: -10px;
+  transition: border .1s ease-in-out;
+  border: 2px solid transparent;
+  &:hover{
+    border: 2px solid #cccccc;
+  }
+}
+.remove {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  color: #fff;
+  cursor: pointer;
+  right: -10px;
+  text-align: center;
+}

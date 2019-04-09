@@ -1,0 +1,32 @@
+@import '../theme/variables.scss';
+
+.side-nav-container {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    transition: width .2s ease-in-out;
+    li {
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        a {
+            border-bottom: 1px solid #ccc;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 10px 10px 20px;
+            display: block;
+            transition: all .15s ease-in;  
+            &:hover, &.active {
+                color: $primaryColor;
+                background-color: #eeeeee;
+            }
+        }
+    }
+}
+section[role=page] {
+    float: left;
+}

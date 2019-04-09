@@ -1,0 +1,41 @@
+@import '../../theme/variables.scss';
+ 
+.login-container {
+    width: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+    padding: 14px;
+    // min-height: 500px;
+    align-items: center;
+    // flex-direction: column;
+    flex-direction: row-reverse;
+    // justify-content: center;
+    form {
+        width: 100%;
+        max-width: 500px;
+        div, h3 {
+            width: 100%;
+        }
+        h3 {
+            margin: 0;
+            padding: 20px 0px 20px 20px;
+            background: $secondaryColor;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+        .actions {
+            margin-top: 40px;
+            align-content: right;
+            text-align: right;
+            .link {
+                padding: 8px 10px 13px;
+                margin: 0px 10px;
+                color: $primaryColor;
+            }
+        }
+    }
+}
