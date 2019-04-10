@@ -30,7 +30,6 @@ export const getSvgLineCoords = (startCoords, endCoords, topOccupiedSpace) => {
     finalCoords.lineStartCoords.y= 0;
     finalCoords.lineEndCoords.y = endCoords.y - startCoords.y;
     finalCoords.svgContainer.top = startCoords.y - topOccupiedSpace;
-    console.log("finalCoords.svgContainer.top: ", finalCoords.svgContainer.top)
   } else {
     // Draw line above the start point
     finalCoords.lineStartCoords.y= startCoords.y - endCoords.y;

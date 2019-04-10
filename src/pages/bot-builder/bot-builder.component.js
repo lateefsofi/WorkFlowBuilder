@@ -6,14 +6,15 @@ import './bot-builder.component.scss';
 
 // HELPERS
 import getSvgLineCoords from './builder-helpers/get-svg-line-coords';
+import { createSvgElement, getSvgContainer, setPathAttributes, setMarkerAttributes, setArrowAttributes } from './builder-helpers/elements';
+import { getCubicBezairCoords } from './builder-helpers/coords-calculator';
 
 const HEADER_HEIGHT = 64;
 const ARROW_DIMS = 8;
-const ELEMENT_PROPS = {
-  width: 200,
-  headerSpace: 50,
-  optionHeight: 20
-};
+const ELEMENT_HEADER = 20;
+const ELEMENT_OPTION_HEIGHT = 48;
+const ELEMENT_OPTION_MID = 10;
+const ELEMENT_WIDTH = 258;
 
 class BotBuilder extends Component {
   constructor (props){
@@ -31,7 +32,6 @@ class BotBuilder extends Component {
     this.selectedDropElement = null;
     this.lineStartCoords = {};
     this.connectors = [];
-    this.delButtons = [];
   }
   handleStop(param) {
     console.log("oaram: ", param);
@@ -59,8 +59,6 @@ class BotBuilder extends Component {
       }      
       this.removeLines(this.connectors);
       this.connectors = [];
-      this.removeLines(this.delButtons);
-      this.delButtons = [];
       this.drawConnectors(BotBuilderData)
     }
     if(this.tempSvg) {
@@ -91,8 +89,6 @@ class BotBuilder extends Component {
     //remove Lines
     this.removeLines(this.connectors);
     this.connectors = [];
-    this.removeLines(this.delButtons);
-    this.delButtons = [];
     //Draw new lines
     this.drawConnectors(BotBuilderData)
   }
@@ -106,16 +102,12 @@ class BotBuilder extends Component {
   drawTempLine(startCoords, endCoords, preOccupiedSpace) {
     const {svgContainer, lineStartCoords, lineEndCoords} = getSvgLineCoords(startCoords, endCoords, preOccupiedSpace);
     if(!this.tempSvg) {
-    this.tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.tempSvg = createSvgElement('svg');
     }
-    this.tempSvg.setAttribute('width', svgContainer.width.toString());
-    this.tempSvg.setAttribute('height', svgContainer.height.toString());
-    this.tempSvg.style.left= `${svgContainer.left}px`;
-    this.tempSvg.style.top= `${svgContainer.top}px`;
-    this.tempSvg.style.position= 'absolute';
+    getSvgContainer.call(this.tempSvg, svgContainer);
     //DRAW PATH
     if(!this.tempPathElement) {
-      this.tempPathElement = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+      this.tempPathElement =createSvgElement('path');
     }
     //Calculate cubic bezair
     if(svgContainer.width > svgContainer.height) {
@@ -129,161 +121,61 @@ class BotBuilder extends Component {
       this.cx2 = lineEndCoords.x;
       this.cy2 = svgContainer.height/2;
     }
+    
     var data = `M${lineStartCoords.x} ${lineStartCoords.y} C${this.cx1} ${this.cy1} ${this.cx2} ${this.cy2} ${lineEndCoords.x} ${lineEndCoords.y}`;
     this.tempPathElement.setAttribute("d", data); 
-    this.tempPathElement.style.stroke = "#32d296"; //Set stroke colour
-    this.tempPathElement.style.strokeWidth = "4px"; //Set stroke width
-    this.tempPathElement.style.fill = "none"; //Set stroke width
+    setPathAttributes.call(this.tempPathElement);
     if(!this.arrowPath) {
-      this.tempArrowPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-      this.tempDefs = document.createElementNS("http://www.w3.org/2000/svg", 'defs');
-      this.tempMarker = document.createElementNS("http://www.w3.org/2000/svg", 'marker');
+      this.tempArrowPath = createSvgElement('path');
+      this.tempDefs = createSvgElement('defs');
+      this.tempMarker = createSvgElement('marker');
     }
-    // const arrowData = `M${lineEndCoords.x-8} ${lineEndCoords.y} L${lineEndCoords.x} ${lineEndCoords.y-10} L${lineEndCoords.x+8} ${lineEndCoords.y} z`;
-    // this.arrow.setAttribute("d", arrowData)
-    // this.arrow.style.stroke = "none";
-    // this.arrow.style.fill = "#32d296";
-    // this.arrow.setAttribute("d", arrowData)
-    this.tempMarker.setAttribute("id", "temp-arrow-head")
-    this.tempMarker.setAttribute("orient", "auto")
-    this.tempMarker.setAttribute("markerWidth", "2")
-    this.tempMarker.setAttribute("markerHeight", "4")
-    this.tempMarker.setAttribute("refX", "0.1")
-    this.tempMarker.setAttribute("refY", "2")
-    this.tempArrowPath.setAttribute("d", "M0,0 V4 L2,2 Z");
-    this.tempArrowPath.setAttribute("fill", "#32d296");
+    setMarkerAttributes.call(this.tempMarker, "-temp");
+    setArrowAttributes.call(this.tempArrowPath);
     this.tempMarker.append(this.tempArrowPath);
     this.tempDefs.append(this.tempMarker);
     this.tempSvg.append(this.tempDefs);
-    this.tempPathElement.setAttribute("marker-end", `url(#temp-arrow-head)`)
+    this.tempPathElement.setAttribute("marker-end", "url(#arrow-head-temp)")
     
     this.tempSvg.appendChild(this.tempPathElement);
-    // this.tempSvg.appendChild(this.arrow);
     this.tempSvg.style.zIndex="3";
     document.getElementById('bot-builder-container').appendChild(this.tempSvg);
     // this.connectors.push(this.tempSvg);
   }
   drawLine(startCoords, endCoords, preOccupiedSpace, arrowHeadId, isEndAsLeft) {
     const {svgContainer, lineStartCoords, lineEndCoords} = getSvgLineCoords(startCoords, endCoords, preOccupiedSpace);
-    // if(!this.tempSvg) {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    // }
-    svg.setAttribute('width', svgContainer.width.toString());
-    svg.setAttribute('height', svgContainer.height.toString());
-    svg.style.left= `${svgContainer.left}px`;
-    svg.style.top= `${svgContainer.top}px`;
-    svg.style.position= 'absolute';
+    let svg = createSvgElement("svg");
+    getSvgContainer.call(svg, svgContainer);
+
     //DRAW PATH
-    // if(!this.pathElement) {
-    const pathElement = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    // }
+    const pathElement = createSvgElement('path');
     //Calculate cubic bezair
-    let cx1, cx2, cy1, cy2;
-    if(isEndAsLeft) {
-      cx1 = svgContainer.width/2;
-      cy1 = lineStartCoords.y;
-      cx2 = svgContainer.width/2
-      cy2 = lineEndCoords.y
-    } else {
-      cx1 = lineStartCoords.x;
-      cy1 = svgContainer.height/2;
-      cx2 = lineEndCoords.x;
-      cy2 = svgContainer.height/2;
-    }
+    const {cx1, cx2, cy1, cy2}=getCubicBezairCoords(svgContainer, lineStartCoords, lineEndCoords, isEndAsLeft)
+    
     var data = `M${lineStartCoords.x} ${lineStartCoords.y} C${cx1} ${cy1} ${cx2} ${cy2} ${lineEndCoords.x - ARROW_DIMS} ${lineEndCoords.y - ARROW_DIMS}`;
     pathElement.setAttribute("d", data); 
-    pathElement.style.stroke = "#32d296"; //Set stroke colour
-    pathElement.style.strokeWidth = "4px"; //Set stroke width
-    pathElement.style.fill = "none"; //Set stroke width
-    //Arrow TEST start
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", 'defs');
-    const marker = document.createElementNS("http://www.w3.org/2000/svg", 'marker');
+    setPathAttributes.call(pathElement);
     
-    marker.setAttribute("id", "arrow-head"+arrowHeadId)
-    marker.setAttribute("orient", "auto")
-    marker.setAttribute("markerWidth", "2")
-    marker.setAttribute("markerHeight", "4")
-    marker.setAttribute("refX", "0.1")
-    marker.setAttribute("refY", "2")
-      //   .append("path")
-      //     .setAttribute("d", "M0,0 V4 L2,2 Z")
-      //     .setAttribute("fill", "red");
-    const arrowPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    arrowPath.setAttribute("d", "M0,0 V4 L2,2 Z");
-    arrowPath.setAttribute("fill", "#32d296");
+    //Arrow TEST start
+    const defs = createSvgElement('defs');
+    const marker = createSvgElement('marker');
+    setMarkerAttributes.call(marker, arrowHeadId)
+    const arrowPath = createSvgElement('path');
+    setArrowAttributes.call(arrowPath);
     marker.append(arrowPath);
     defs.append(marker);
     svg.append(defs);
     pathElement.setAttribute("marker-end", `url(#arrow-head${arrowHeadId})`)
-    //ARROW TEST END
-    //Draw arrow
-    // const arrow = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    // const arrowData = `M${lineEndCoords.x-ARROW_DIMS} ${lineEndCoords.y-ARROW_DIMS-20} L${lineEndCoords.x} ${lineEndCoords.y} L${lineEndCoords.x-ARROW_DIMS} ${lineEndCoords.y+ARROW_DIMS} z`;
-    // arrow.setAttribute("d", arrowData)
-    // arrow.style.stroke = "none";
-    // arrow.style.fill = "#32d296";
-    // arrow.setAttribute("d", arrowData)
+    
     svg.appendChild(pathElement);
-    // svg.appendChild(arrow);
     document.getElementById('bot-builder-container').appendChild(svg);
     this.connectors.push(svg);
-    const lineMid = pathElement.getPointAtLength(65);
-    const btnCoords = {
-      x: lineMid.x + svgContainer.left-10,
-      y: lineMid.y + svgContainer.top,
-    }
-    debugger
-    const delButton = document.createElement('button');
-    delButton.setAttribute("id", "del-button"+arrowHeadId);
-    delButton.innerHTML="<span>del<span>"
-    delButton.style.position = "absolute";
-    delButton.style.zIndex = "3";
-    delButton.style.left = `${btnCoords.x}px`;
-    delButton.style.top = `${btnCoords.y}px`;
-    delButton.style.display="none";
-    document.getElementById('bot-builder-container').appendChild(delButton);
-    this.delButtons.push(delButton);
-    pathElement.addEventListener("mouseover", ()=>{
-      delButton.style.display="inline-block";
-    })
-    delButton.addEventListener("mouseover", ()=>{
-      delButton.style.display="inline-block";
-    })
-    pathElement.addEventListener("mouseout", ()=>{
-      delButton.style.display="none";
-    })
+    
   }
   
   componentDidMount() {
     // this.drawLine();
     this.drawConnectors(BotBuilderData)
-  }
-
-  //Get line start
-  getLineStart(startCoords, svgCoords){
-    if(startCoords.y>svgCoords.y) {
-      return {
-        y: startCoords.y - svgCoords.y,
-        x: 0
-      }
-    }
-    return {
-      x: 0,
-      y: 0
-    }
-  }
-  //get line end
-  getLineEnd(startCoords, svgCoords){
-    if(startCoords.y<svgCoords.y) {
-      return {
-        x: Math.abs(svgCoords.x - startCoords.x),
-        y: Math.abs(svgCoords.y - startCoords.y)
-      }
-    }
-    return {
-      x: Math.abs(svgCoords.x - startCoords.x),
-      y: 0
-    }
   }
 
   /**
@@ -330,8 +222,8 @@ class BotBuilder extends Component {
           //START POINT
           const startDomElement = document.getElementById(`chat-element-${key}`);
           // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
-          const startY = elementsData[key].pos.y + 64+20+(i*48-10); // optionId.offsetTop + optionId.parentElement.offsetTop +  optionId.parentElement.parentElement.offsetTop;
-          const startX = elementsData[key].pos.x + 258;// optionId.parentElement.parentElement.offsetLeft + optionId.parentElement.parentElement.clientWidth;  
+          const startY = elementsData[key].pos.y + HEADER_HEIGHT+ELEMENT_HEADER+(i*ELEMENT_OPTION_HEIGHT-ELEMENT_OPTION_MID);
+          const startX = elementsData[key].pos.x + ELEMENT_WIDTH;
           
           // END POINT
           const nextElement = elementsData[elementsData[key].options[i].next];
