@@ -1,0 +1,63 @@
+@import 'src/theme/variables.scss';
+
+.builder-top-nav {
+  position: fixed;
+  padding-left: $leftNav;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: $topNav;
+  background-color: $white;
+  z-index: 8;
+  border-bottom: 1px solid $gray;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  div{
+    display: inline-block;
+    a {
+      text-decoration: none;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-right: 10px;
+      font-size: 13px;
+      color: $text-color1;
+      transition: all .3s ease-in-out;
+      box-sizing: border-box;
+    }
+  }
+  .builder-top-nav-left {
+    float: left;
+    margin: 0 0 0 32px;
+    font-size: 20px;
+    line-height: 24px;
+    color: $text-color2;
+    min-width: 260px;
+    .bot-name{
+      margin: 0 20px 0 0;
+      input[type=text]{
+        height: 24px;
+        padding: 14px;
+        box-sizing: border-box;
+        font-size: 20px;
+        line-height: 24px;
+        color: $text-color2;
+      }
+    }
+  }
+  .builder-top-nav-mid {
+    margin: 0 auto;
+    a{
+      &.active, &:hover {
+        background-color: $color1;
+        color: $white;
+      }
+    }
+  }
+  .builder-top-nav-right {
+    float: right;
+    .arrow-left {
+      margin-right: 10px;
+    }
+  }
+}

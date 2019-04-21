@@ -1,0 +1,26 @@
+i{
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden;
+  background-size: contain;
+}
+.arrow-left {
+  background: url(./assets/icons/arrow_left.svg) no-repeat center bottom;
+  width: 10px;
+  height: 10px;
+}
+.email {
+  background: url(./assets/icons/email.svg) no-repeat center bottom;
+  width: 14px;
+  height: 12px;
+}
+.copy-icon{
+  background: url(./assets/icons/copy_white.svg) no-repeat center bottom;
+  width: 14px;
+  height: 14px;
+}
+.delete-icon{
+  background: url(./assets/icons/delete_white.svg) no-repeat center bottom;
+  width: 14px;
+  height: 14px;
+}

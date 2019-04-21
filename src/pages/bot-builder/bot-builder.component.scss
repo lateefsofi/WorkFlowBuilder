@@ -1,3 +1,5 @@
+@import 'src/theme/variables.scss';
+
 .bot-builder-container {
   position: relative;
   float: left;
@@ -13,72 +15,149 @@
 }
 
 .element-container {
-  border: 1px solid #ccc;
-  width: 250px;
+  border: 1px solid $border-color;
+  width: 260px;
   min-height: 140px;
   background-color: #fff;
-  padding: 10px;
+  padding: 22px;
   position: absolute;
   border: 1px solid transparent;
   transition: border .2s ease-in-out;
   z-index: 2;
   border-radius: 10px;
+  box-sizing: border-box;
+  transition: box-shadow .3s ease-in-out;
+  .controlType{
+    font-size: 14px;
+    line-height: 17px;
+    color: $text-color1;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    span{
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50px;
+      margin-right: 8px;
+    }
+  }
   .heading{
-    border-bottom: 1px solid #ccc;
-    height: 36px;
+    height: 28px;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
     white-space: nowrap;
     padding-top: 8px;
     margin-bottom: 8px;
+    font-size: 16px;
+    line-height: 18px;
     &:hover {
       overflow: visible;
     }
   }
   &:hover{
-    border: 1px solid green;
+    box-shadow: 0px 0px 20px 0px $border-color;
+    border: 1px solid $color1;
+    .actions{
+      height: 18px;
+      top: -26px;
+      padding: 5px 10px 2px;
+    }
   }
   .options{
-    padding: 10px;
+    position: relative;
+    padding: 6px 10px 2px;
+    border: 0.5px solid $border-color;
     background: #f7f7f7;
-    border-radius: 10px;
+    border-radius: 6px;
     margin-bottom: 10px;
+    color: $border-color;
+    opacity: 0.9;
+    .text{
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+    }
+    .line{
+      position: absolute;
+      right: -15px;
+      border-bottom: 1px solid $border-color;
+      width: 16px;
+      top: 50%;
+      height: 0;
+      display: inline-block;
+      transform: translatey(-50%);
+    }
   }
   .drag-area{
     display: block;
     position: absolute;
     left: 0;
     top: 0;
-    width: 92%;
+    width: 97%;
     height: 100%;
     background: transparent;
     cursor: move;
+    z-index: 3;
+  }
+  .actions{
+    position: absolute;
+    right: 0;
+    top: -16px;
+    background-color: $color1;
+    padding: 0;
+    border-radius: 10px;
+    height: 0;
+    transition: height .3s ease-in-out;
+    transition: top .3s ease-in-out;
+    overflow: hidden;
+    i{
+      position: relative;
+      &:first-child{
+        margin-right: 10px;
+      }
+    }
   }
 }
 
 .connector{
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   position: absolute;
-  background: cadetblue;
+  background: $white;
   border-radius: 50px;
   cursor: pointer;
-  right: -10px;
+  right: -31px;
   transition: border .1s ease-in-out;
-  border: 2px solid transparent;
+  border: 1px solid $border-color;
+  color: $text-color3;
+  top: 50%;
+  transform: translateY(-50%);
   &:hover{
-    border: 2px solid #cccccc;
+    background-color: $border-color;
   }
 }
 .remove {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   position: absolute;
-  color: #fff;
+  color: $white;
   cursor: pointer;
-  right: -10px;
+  right: -30px;
   text-align: center;
+  background: $color1;
+  border-radius: 50px;
+  font-size: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
 }

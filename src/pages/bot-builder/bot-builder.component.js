@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
+import { controlColors } from '../../shared/constants';
 
 import endPoints from '../../shared/constants/endPoints.constants';
 import './bot-builder.component.scss';
@@ -9,14 +10,19 @@ import getSvgLineCoords from './builder-helpers/get-svg-line-coords';
 import { createSvgElement, getSvgContainer, setPathAttributes, setMarkerAttributes, setArrowAttributes } from './builder-helpers/elements';
 import { getCubicBezairCoords } from './builder-helpers/coords-calculator';
 
-const HEADER_HEIGHT = 64;
-const ARROW_DIMS = 8;
-const ELEMENT_HEADER = 20;
-const ELEMENT_OPTION_HEIGHT = 48;
+const HEADER_HEIGHT = 54;
+const ARROW_DIMS = 6;
+const ELEMENT_HEADER = 66;
+const ELEMENT_OPTION_HEIGHT = 42;
 const ELEMENT_OPTION_MID = 10;
-const ELEMENT_WIDTH = 258;
+const ELEMENT_WIDTH = 264;
+const LeftNavWidth = 56;
+const boundaries = {
+  left: 292,
+  top: 0
+}
 
-class BotBuilder extends Component {
+export class BotBuilder extends Component {
   constructor (props){
     super(props);
     this.isConnectionNeeded = false;
@@ -53,13 +59,14 @@ class BotBuilder extends Component {
       this.isConnectionNeeded = false;
       if(this.startOfNewLine.elementKey === this.selectedDropElement) {
         //Same as starting elements clear old reference
-        BotBuilderData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = null;
+        this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = null;
       } else {
-        BotBuilderData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = this.selectedDropElement;
-      }      
+        this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = this.selectedDropElement;
+      }
+      document.getElementById('chat-element-'+this.startOfNewLine.elementKey+'-option-remove'+this.startOfNewLine.optionIndex).style.display="none"
       this.removeLines(this.connectors);
       this.connectors = [];
-      this.drawConnectors(BotBuilderData)
+      this.drawConnectors(this.props.botData)
     }
     if(this.tempSvg) {
       this.tempSvg.remove();
@@ -82,7 +89,7 @@ class BotBuilder extends Component {
     }
   }
   handleDrag(e, draggableData, itemId) {
-    BotBuilderData[itemId].pos = {
+    this.props.botData[itemId].pos = {
       x: draggableData.x,
       y: draggableData.y
     }
@@ -90,10 +97,11 @@ class BotBuilder extends Component {
     this.removeLines(this.connectors);
     this.connectors = [];
     //Draw new lines
-    this.drawConnectors(BotBuilderData)
+    this.drawConnectors(this.props.botData)
   }
 
   removeLines(list) {
+    // document.getElementsByClassName('remove').style.display="none";
     list.forEach(svgLine=>{
       svgLine.remove();
     })
@@ -104,7 +112,7 @@ class BotBuilder extends Component {
     if(!this.tempSvg) {
     this.tempSvg = createSvgElement('svg');
     }
-    getSvgContainer.call(this.tempSvg, svgContainer);
+    getSvgContainer.call(this.tempSvg, svgContainer, LeftNavWidth);
     //DRAW PATH
     if(!this.tempPathElement) {
       this.tempPathElement =createSvgElement('path');
@@ -145,7 +153,7 @@ class BotBuilder extends Component {
   drawLine(startCoords, endCoords, preOccupiedSpace, arrowHeadId, isEndAsLeft) {
     const {svgContainer, lineStartCoords, lineEndCoords} = getSvgLineCoords(startCoords, endCoords, preOccupiedSpace);
     let svg = createSvgElement("svg");
-    getSvgContainer.call(svg, svgContainer);
+    getSvgContainer.call(svg, svgContainer, 0);
 
     //DRAW PATH
     const pathElement = createSvgElement('path');
@@ -175,7 +183,13 @@ class BotBuilder extends Component {
   
   componentDidMount() {
     // this.drawLine();
-    this.drawConnectors(BotBuilderData)
+    // this.setState({
+    //   botBuilderData: this.props.botData
+    // })
+    debugger;
+    if(this.props.botData) {
+      this.drawConnectors(this.props.botData)
+    }
   }
 
   /**
@@ -183,7 +197,12 @@ class BotBuilder extends Component {
    */
   getBotBuilderView(data) {
     return Object.keys(data)
-      .map((item, itemIndex)=>(
+      .map((item, itemIndex)=>{
+        const backgroundColor = {'background-color': controlColors[data[item].type]};
+        const ligtBackgroundColor = {'background-color': `${controlColors[data[item].type]}22`};
+        const borderColor = {'border-color': controlColors[data[item].type]};
+        const color = {'color': controlColors[data[item].type]};
+        return(
         <Draggable
           key={itemIndex}
           axis="both"
@@ -194,31 +213,44 @@ class BotBuilder extends Component {
           scale={1}
           onStart={this.handleStart}
           onDrag={(e, draggableData)=>this.handleDrag(e, draggableData, item)}
-          onStop={this.handleStop}>
+          onStop={this.handleStop}
+          bounds={ boundaries }>
           <div 
             id={'chat-element-'+item} 
             className="element-container"
             onMouseOver={e=>this.handlerMouseOverOnElement(e, item)}>
+            <div className="actions">
+              <i className="copy-icon" onClick={()=>this.props.copyElementHandler(item)}></i>
+              <i className="delete-icon" onClick={()=>this.props.deleteElementHandler(item)}></i>
+            </div>
             <div className="drag-area handle"></div>
+            <div className="controlType">
+              <span style={backgroundColor}></span>
+                {data[item].typeName}
+            </div>
             <div className="handle heading">{data[item].heading}</div>
             {
               data[item].options.map((option, optionIndex)=>(
-                <div className="options" key={itemIndex+'option'+optionIndex}>
-                  {option.value}
+                <div className="options" style={{...borderColor, ...ligtBackgroundColor, ...color} } key={itemIndex+'option'+optionIndex}>
+                  <span className="text">{option.value} </span>
+                  <span className="line"></span>
                   <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className="connector"></span>
-                  {/* <span className="remove">x</span> */}
+                  <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>
                 </div>
               ))
             }
           </div>
         </Draggable>
-      ))
+      )
+    })
   }
 
   drawConnectors(elementsData) {
     Object.keys(elementsData).forEach(key => {
       for(let i=0; i<elementsData[key].options.length; i++){
         if(elementsData[key].options[i].next) {
+          //Show close icons
+          document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
           //START POINT
           const startDomElement = document.getElementById(`chat-element-${key}`);
           // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
@@ -252,7 +284,7 @@ class BotBuilder extends Component {
   render() {
     return(
       <div onMouseMove={this.handleMouseMove} onMouseUp={this.handlerConnectorMouseUp} className="bot-builder-container" id="bot-builder-container">
-        {this.getBotBuilderView(BotBuilderData)}
+        {this.getBotBuilderView(this.props.botData)}
         {/* {this.drawConnectors(BotBuilderData)} */}
       </div>
     );
@@ -262,46 +294,3 @@ class BotBuilder extends Component {
 export default BotBuilder;
 
 
-
-
-const BotBuilderData = {
-  "fdafds54541": {
-    id: "fdafds54541",
-    heading: "Please select your hobby?",
-    options: [
-      {value: "Cricket", next: "fdafds54542"},
-      {value: "FootBall", next: null},
-      {value: "Volleyball", next: "fdafds54543"}
-    ],
-    pos: {
-      x: 100,
-      y: 200
-    }
-  },
-  "fdafds54542": {
-    id: "fdafds54542",
-    heading: "Please select favrite language?",
-    options: [
-      {value: "C", next: null},
-      {value: "C++", next: null},
-      {value: "JAVA", next: null}
-    ],
-    pos: {
-      x: 500,
-      y: 100
-    }
-  },
-  "fdafds54543": {
-    id: "fdafds54543",
-    heading: "Please select favourite city?",
-    options: [
-      {value: "Srinagar", next: null},
-      {value: "Bangaluru", next: null},
-      {value: "Mumbai", next: null}
-    ],
-    pos: {  
-      x: 500,
-      y: 350
-    }
-  }
-}

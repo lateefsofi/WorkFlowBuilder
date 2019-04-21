@@ -6,15 +6,19 @@ import './App.scss';
 import theme from './theme/theme.component';
 import Layout from './layout/Layout.component';
 import Loader from './shared/components/loader/Loader.component.js';
+import AppRouting from './routing/appRouting.component';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <MuiThemeProvider theme={theme}>
+        <div>
+          {/* <AppRouting /> */}
+        {/* <MuiThemeProvider theme={theme}> */}
           <Layout/>
-          <Loader/>
-        </MuiThemeProvider>
+          {/* <Loader/> */}
+        {/* </MuiThemeProvider> */}
+        </div>
       </Router>
     );
   }

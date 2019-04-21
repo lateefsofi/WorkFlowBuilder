@@ -1,20 +1,24 @@
+
+const lineColor = '#BCBCBC'; //"#32d296"
+const lineWidth = '3px';
+
 /**
  * Create an SVG element
  * @param {*} type 
  */
 export const createSvgElement= type => document.createElementNS("http://www.w3.org/2000/svg", type);
 
-export const getSvgContainer = function (svgContainer){
+export const getSvgContainer = function (svgContainer, leftNavWidth){
   this.setAttribute('width', svgContainer.width.toString());
   this.setAttribute('height', svgContainer.height.toString());
-  this.style.left= `${svgContainer.left}px`;
+  this.style.left= `${svgContainer.left-leftNavWidth}px`;
   this.style.top= `${svgContainer.top}px`;
   this.style.position= 'absolute';
 }
 
 export const setPathAttributes= function (){
-  this.style.stroke = "#32d296"; //Set stroke colour
-  this.style.strokeWidth = "4px"; //Set stroke width
+  this.style.stroke = lineColor; //Set stroke colour
+  this.style.strokeWidth = lineWidth; //Set stroke width
   this.style.fill = "none"; //Set stroke width
 }
 
@@ -28,8 +32,9 @@ export const setMarkerAttributes = function(arrowHeadId) {
 }
 
 export const setArrowAttributes = function() {
-  this.setAttribute("d", "M0,0 V4 L2,2 Z");
-  this.setAttribute("fill", "#32d296");
+  this.setAttribute("d", "M0,0 V4 L2,2 Z"); // Arrow
+  // this.setAttribute("d","M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0")
+  this.setAttribute("fill", lineColor);
 }
 
 //ADD A DELETE BUTTON ON LINE LOGIC

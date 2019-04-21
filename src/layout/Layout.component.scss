@@ -1,32 +1,35 @@
-@import '../theme/variables.scss';
+@import 'src/theme/variables.scss';
 
-.side-nav-container {
-    background-color: transparent;
-    margin: 0px;
-    padding: 0px;
-    float: left;
-    position: absolute;
-    overflow: hidden;
+.parent-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .top-nav {
     width: 100%;
-    transition: width .2s ease-in-out;
-    li {
-        width: 100%;
-        padding: 0px;
-        margin: 0px;
-        a {
-            border-bottom: 1px solid #ccc;
-            color: #333;
-            text-decoration: none;
-            padding: 10px 10px 10px 20px;
-            display: block;
-            transition: all .15s ease-in;  
-            &:hover, &.active {
-                color: $primaryColor;
-                background-color: #eeeeee;
-            }
-        }
-    }
-}
-section[role=page] {
-    float: left;
+    height: $topNav;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-left: $leftNav;
+    background-color: green;
+    z-index: 8;
+    box-sizing: border-box;
+  }
+  .left-nav {
+    width: $leftNav;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $color1;
+    z-index: 9;
+    box-sizing: border-box;
+  }
+  .main-container {
+    margin: $topNav 0 0 $leftNav; 
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
 }

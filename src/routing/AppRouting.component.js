@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { connect } from "react-redux";
 import Registration from '../pages/registration/Registration.component';
 import Login from '../pages/login/Login.component';
-import BotBuilder from '../pages/bot-builder/bot-builder.component';
+import { BuilderMain } from '../pages/bot-builder/builder-main';
 
 class AppRouting extends Component {
     authenticatedRoutes() {
@@ -22,7 +22,7 @@ class AppRouting extends Component {
            {/* Add All open routes here */}
           <Route exact path="/" component={Login} />
           <Route path="/registration" component={Registration} />
-          <Route path="/bot-builder" component={BotBuilder} />
+          <Route path="/bot-builder" component={BuilderMain} />
         </div>
       );
     }

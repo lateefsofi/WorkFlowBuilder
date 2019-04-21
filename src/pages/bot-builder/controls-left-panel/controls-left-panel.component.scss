@@ -1,0 +1,89 @@
+@import 'src/theme/variables.scss';
+
+.controls-left-panel{
+  position: fixed;
+  width: 292px;
+  height: 100%;
+  background: $white;
+  z-index: 4;
+  padding: 18px;
+  box-sizing: border-box;
+  box-shadow: 15px 15px 38px 0 $shadow-color;
+  overflow: hidden;
+  section {
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .controls-section {
+    width: 100%;
+    position: relative;
+  }
+  .control-properties-section {
+    transition: width .3s ease-in-out;
+    background: $white;
+    width: 0;
+    position: absolute;
+    top:0;
+    left:0;
+    padding: 0;
+    &.active{
+      width: 100%;
+      padding: 14px;
+    }
+    .close {
+      float: right;
+    }
+  }
+  .title{
+    font-size: 20px;
+    font-weight: normal;
+    margin: 16px 0px 16px 0px;
+  }
+  ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li{
+      position: relative;
+      display: inline-block;
+      padding: 16px 0;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+      min-width: 84px;
+      text-align: center;
+      &:hover{
+        background-color: rgba(233, 228, 255, 0.3)
+      }
+      .name{
+        display: block;
+        font-size: 15px;
+        line-height: 18px;
+        color: $text-color2;
+      }
+      i{
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .additonal-blocks{
+    button{
+      padding: 4px 10px;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 16px;
+      margin: 0 14px 14px 0;
+      span{
+        margin-left: 10px;
+        font-size: 18px;
+        line-height: 22px;
+        color: $yellow;
+      }
+    }
+  }
+}
