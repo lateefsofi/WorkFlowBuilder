@@ -34,7 +34,7 @@ export class ControlsLeftPanel extends Component {
       </li>)
     const additionalBlock = elementsList =>
       elementsList.map((element, index)=>
-      <button>
+      <button key={index}>
         { element.name }
         <span className="plus-icon">+</span>
       </button>

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-import { controlColors } from '../../shared/constants';
+import { controlColors } from '../../../shared/constants';
 
-import endPoints from '../../shared/constants/endPoints.constants';
+import endPoints from '../../../shared/constants/endPoints.constants';
 import './bot-builder.component.scss';
 
 // HELPERS
-import getSvgLineCoords from './builder-helpers/get-svg-line-coords';
-import { createSvgElement, getSvgContainer, setPathAttributes, setMarkerAttributes, setArrowAttributes } from './builder-helpers/elements';
-import { getCubicBezairCoords } from './builder-helpers/coords-calculator';
+import getSvgLineCoords from '../builder-helpers/get-svg-line-coords';
+import { createSvgElement, getSvgContainer, setPathAttributes, setMarkerAttributes, setArrowAttributes } from '../builder-helpers/elements';
+import { getCubicBezairCoords } from '../builder-helpers/coords-calculator';
 
 const HEADER_HEIGHT = 54;
 const ARROW_DIMS = 6;
 const ELEMENT_HEADER = 66;
-const ELEMENT_OPTION_HEIGHT = 42;
+const ELEMENT_OPTION_HEIGHT = 39;
 const ELEMENT_OPTION_MID = 10;
 const ELEMENT_WIDTH = 264;
 const LeftNavWidth = 56;
@@ -38,9 +38,33 @@ export class BotBuilder extends Component {
     this.selectedDropElement = null;
     this.lineStartCoords = {};
     this.connectors = [];
+
+    this.deleteElementHandler = this.deleteElementHandler.bind(this);
   }
-  handleStop(param) {
-    console.log("oaram: ", param);
+
+  componentDidMount() {
+    // this.drawLine();
+    // this.setState({
+    //   botBuilderData: this.props.botData
+    // })
+    debugger;
+    if(this.props.botData) {
+      this.drawConnectors(this.props.botData)
+    }
+  }
+  componentDidUpdate() {
+    if(this.props.botData) {
+      this.drawConnectors(this.props.botData)
+    }
+  }
+
+  handleStop(draggableData, key) {
+    const updatedBotData = {...this.props.botData};
+    updatedBotData[key].pos = {
+      x: draggableData.x,
+      y: draggableData.y
+    }
+    this.props.handleBotDataChange(updatedBotData);
   }
   handleConnectorMouseDown(e, elementKey, optionIndex) {
     this.lineStartCoords = {
@@ -63,7 +87,8 @@ export class BotBuilder extends Component {
       } else {
         this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = this.selectedDropElement;
       }
-      document.getElementById('chat-element-'+this.startOfNewLine.elementKey+'-option-remove'+this.startOfNewLine.optionIndex).style.display="none"
+      this.props.handleBotDataChange(this.props.botData);
+      // document.getElementById('chat-element-'+this.startOfNewLine.elementKey+'-option-remove'+this.startOfNewLine.optionIndex).style.display="none"
       this.removeLines(this.connectors);
       this.connectors = [];
       this.drawConnectors(this.props.botData)
@@ -181,76 +206,12 @@ export class BotBuilder extends Component {
     
   }
   
-  componentDidMount() {
-    // this.drawLine();
-    // this.setState({
-    //   botBuilderData: this.props.botData
-    // })
-    debugger;
-    if(this.props.botData) {
-      this.drawConnectors(this.props.botData)
-    }
-  }
-
-  /**
-   * Setup the controls of bot builder based on JSON data
-   */
-  getBotBuilderView(data) {
-    return Object.keys(data)
-      .map((item, itemIndex)=>{
-        const backgroundColor = {'background-color': controlColors[data[item].type]};
-        const ligtBackgroundColor = {'background-color': `${controlColors[data[item].type]}22`};
-        const borderColor = {'border-color': controlColors[data[item].type]};
-        const color = {'color': controlColors[data[item].type]};
-        return(
-        <Draggable
-          key={itemIndex}
-          axis="both"
-          handle=".handle"
-          defaultPosition={data[item].pos}
-          position={null}
-          grid={[1, 1]}
-          scale={1}
-          onStart={this.handleStart}
-          onDrag={(e, draggableData)=>this.handleDrag(e, draggableData, item)}
-          onStop={this.handleStop}
-          bounds={ boundaries }>
-          <div 
-            id={'chat-element-'+item} 
-            className="element-container"
-            onMouseOver={e=>this.handlerMouseOverOnElement(e, item)}>
-            <div className="actions">
-              <i className="copy-icon" onClick={()=>this.props.copyElementHandler(item)}></i>
-              <i className="delete-icon" onClick={()=>this.props.deleteElementHandler(item)}></i>
-            </div>
-            <div className="drag-area handle"></div>
-            <div className="controlType">
-              <span style={backgroundColor}></span>
-                {data[item].typeName}
-            </div>
-            <div className="handle heading">{data[item].heading}</div>
-            {
-              data[item].options.map((option, optionIndex)=>(
-                <div className="options" style={{...borderColor, ...ligtBackgroundColor, ...color} } key={itemIndex+'option'+optionIndex}>
-                  <span className="text">{option.value} </span>
-                  <span className="line"></span>
-                  <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className="connector"></span>
-                  <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>
-                </div>
-              ))
-            }
-          </div>
-        </Draggable>
-      )
-    })
-  }
-
   drawConnectors(elementsData) {
     Object.keys(elementsData).forEach(key => {
       for(let i=0; i<elementsData[key].options.length; i++){
         if(elementsData[key].options[i].next) {
           //Show close icons
-          document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
+          // document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
           //START POINT
           const startDomElement = document.getElementById(`chat-element-${key}`);
           // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
@@ -281,10 +242,71 @@ export class BotBuilder extends Component {
       }
     });
   }
+
+  deleteElementHandler(item) {
+    this.removeLines(this.connectors);
+    this.props.deleteElementHandler(item)
+  }
+
+  /**
+   * Setup the controls of bot builder based on JSON data
+   */
+  getBotBuilderView(data) {
+    return Object.keys(data)
+      .map((item, itemIndex)=>{
+        const backgroundColor = {'backgroundColor': controlColors[data[item].type]};
+        const ligtBackgroundColor = {'backgroundColor': `${controlColors[data[item].type]}22`};
+        const borderColor = {'borderColor': controlColors[data[item].type]};
+        const color = {'color': controlColors[data[item].type]};
+        return(
+        <Draggable
+          key={itemIndex}
+          axis="both"
+          handle=".handle"
+          defaultPosition={{...data[item].pos}}
+          position={{...data[item].pos}}
+          grid={[1, 1]}
+          scale={1}
+          onStart={this.handleStart}
+          onDrag={(e, draggableData)=>this.handleDrag(e, draggableData, item)}
+          onStop={(e, draggableData)=>this.handleStop(draggableData, item)}
+          bounds={ boundaries }>
+          <div 
+            id={'chat-element-'+item} 
+            className="element-container"
+            onMouseOver={e=>this.handlerMouseOverOnElement(e, item)}>
+            <div className="actions">
+              <i className="copy-icon" onClick={()=>this.props.copyElementHandler(item)}></i>
+              <i className="delete-icon" onClick={()=> this.deleteElementHandler(item)}></i>
+            </div>
+            <div className="drag-area handle"></div>
+            <div className="controlType">
+              <span style={backgroundColor}></span>
+                {data[item].typeName}
+            </div>
+            <div className="handle heading">{data[item].heading}</div>
+            {
+              data[item].options.map((option, optionIndex)=>(
+                <div className="options" style={{...borderColor, ...ligtBackgroundColor, ...color} } key={itemIndex+'option'+optionIndex}>
+                  <span className="text">{option.value} </span>
+                  <span className="line"></span>
+                  <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className="connector"></span>
+                  { option.next && <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>}
+                </div>
+              ))
+            }
+          </div>
+        </Draggable>
+      )
+    })
+  }
+
+  
   render() {
+    debugger
     return(
       <div onMouseMove={this.handleMouseMove} onMouseUp={this.handlerConnectorMouseUp} className="bot-builder-container" id="bot-builder-container">
-        {this.getBotBuilderView(this.props.botData)}
+        {this.getBotBuilderView(JSON.parse(JSON.stringify(this.props.botData)))}
         {/* {this.drawConnectors(BotBuilderData)} */}
       </div>
     );
