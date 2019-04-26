@@ -40,9 +40,9 @@ export class BuilderTopNav extends Component{
         </div>
         <div className="builder-top-nav-mid">
           <Link to="/bot-builder">Design</Link>
-          <Link className="active" to="/bot-builder">Builder</Link>
-          <Link to="/bot-builder">Settings</Link>
-          <Link to="/bot-builder">Share</Link>
+          <Link className={ window.location.pathname === '/bot-builder'? 'active': '' } to="/bot-builder">Builder</Link>
+          <Link className={ window.location.pathname === '/bot-builder'? 'active': '' } to="/bot-builder">Settings</Link>
+          <Link className={ window.location.pathname === '/bot-builder'? 'active': '' } to="/bot-builder">Share</Link>
         </div>
         <div className="builder-top-nav-right">
           <Link to="/">

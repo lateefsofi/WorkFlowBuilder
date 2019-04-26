@@ -4,7 +4,7 @@ import { BuilderTopNav } from './builder-top-nav/builder-top-nav.component';
 import { ControlsLeftPanel } from './controls-left-panel/controls-left-panel.component';
 import { BotBuilder } from './bot-builder/bot-builder.component';
 
-import { isEmpty, ObjectId } from '../../shared/utils/utils';
+import { isEmpty, objectId } from '../../shared/utils/utils';
 import './builder-main.scss';
 
 export class BuilderMain extends Component {
@@ -19,6 +19,7 @@ export class BuilderMain extends Component {
     this.copyElementHandler = this.copyElementHandler.bind(this);
     this.deleteElementHandler = this.deleteElementHandler.bind(this);
     this.handleBotDataChange = this.handleBotDataChange.bind(this);
+    this.handleAddUpdateBotElement = this.handleAddUpdateBotElement.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ export class BuilderMain extends Component {
     })
   }
   copyElementHandler(elementId) {
-    const newObjectId = ObjectId();
+    const newObjectId = objectId();
     const newElement = JSON.parse(JSON.stringify(this.state.builderData[elementId]));
     newElement.id = newObjectId;
     newElement.pos.x += 20; 
@@ -51,8 +52,17 @@ export class BuilderMain extends Component {
     })
   }
   deleteElementHandler(elementId) {
-    const updatedElements = JSON.parse(JSON.stringify(this.state.builderData)); // { ...this.state.builderData };
+    debugger
+    let updatedElements = JSON.parse(JSON.stringify(this.state.builderData)); // { ...this.state.builderData };
     delete updatedElements[elementId];
+    Object.keys(updatedElements).map(key =>{
+      updatedElements[key].options = updatedElements[key].options.map(option => {
+        if(option.next === elementId) {
+          option.next = null;
+        }
+        return option;
+      })
+    } )
     this.setState({
       builderData: JSON.parse(JSON.stringify(updatedElements))
     });
@@ -64,11 +74,20 @@ export class BuilderMain extends Component {
     });
   }
 
+  handleAddUpdateBotElement(newBotElement) {
+    debugger
+    const builderData = JSON.parse(JSON.stringify(this.state.builderData));
+    builderData[newBotElement.id] = newBotElement;
+    this.setState({
+      builderData: JSON.parse(JSON.stringify(builderData))
+    });
+  }
+
   render() {
     return (
       <div>
         <BuilderTopNav botName={this.state.builderName} onNameChangeHandler={this.onNameChangeHandler}/>
-        <ControlsLeftPanel />
+        <ControlsLeftPanel handleAddUpdateBotElement={this.handleAddUpdateBotElement}/>
         <div className="bot-builder-main-container">
         {
           !isEmpty(this.state.builderData) && 

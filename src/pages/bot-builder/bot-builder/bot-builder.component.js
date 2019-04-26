@@ -222,6 +222,7 @@ export class BotBuilder extends Component {
           const nextElement = elementsData[elementsData[key].options[i].next];
           const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].options[i].next}`);
           let endX, endY, isLeftEndPoint= false;
+          debugger
           if(startY < nextElement.pos.y && nextElement.pos.x - startX<10) {
             endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
             endY = nextElement.pos.y;
