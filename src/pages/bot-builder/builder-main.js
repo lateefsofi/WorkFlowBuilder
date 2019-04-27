@@ -52,7 +52,6 @@ export class BuilderMain extends Component {
     })
   }
   deleteElementHandler(elementId) {
-    debugger
     let updatedElements = JSON.parse(JSON.stringify(this.state.builderData)); // { ...this.state.builderData };
     delete updatedElements[elementId];
     Object.keys(updatedElements).map(key =>{
@@ -75,7 +74,6 @@ export class BuilderMain extends Component {
   }
 
   handleAddUpdateBotElement(newBotElement) {
-    debugger
     const builderData = JSON.parse(JSON.stringify(this.state.builderData));
     builderData[newBotElement.id] = newBotElement;
     this.setState({

@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 
+import { OptionsFormComponent } from './forms/options-form.component';
+
 export class BotControlSettingsComponent extends Component {
+  saveElementPropsHandler(element) {
+    this.props.elementDetailsSaveHandler(element);
+  }
   render(){
     const {elementDetailsSaveHandler, elementDetails, toggleControlSettings} = this.props;
     return(
       <section className={`control-properties-section ${elementDetails?'active':''}`}>
-        <i className="close arrow-left" onClick={toggleControlSettings.bind(null, false)}>
-        </i>
-        <button onClick={elementDetailsSaveHandler.bind(null, elementDetails)}>
+        <div className="back-container">
+          <i className="close arrow-left" onClick={toggleControlSettings.bind(null, false)}>
+          </i>
+        </div>
+        { elementDetails &&
+          <div>
+            <OptionsFormComponent 
+            element={elementDetails}
+            saveElementPropsHandler={this.props.elementDetailsSaveHandler} />
+          </div>
+        }
+        {/* <button onClick={elementDetailsSaveHandler.bind(null, elementDetails)}>
           Create
-        </button>
+        </button> */}
       </section>
     );
   }

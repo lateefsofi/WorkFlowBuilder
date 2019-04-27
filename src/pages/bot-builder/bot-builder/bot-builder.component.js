@@ -47,7 +47,6 @@ export class BotBuilder extends Component {
     // this.setState({
     //   botBuilderData: this.props.botData
     // })
-    debugger;
     if(this.props.botData) {
       this.drawConnectors(this.props.botData)
     }
@@ -222,7 +221,6 @@ export class BotBuilder extends Component {
           const nextElement = elementsData[elementsData[key].options[i].next];
           const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].options[i].next}`);
           let endX, endY, isLeftEndPoint= false;
-          debugger
           if(startY < nextElement.pos.y && nextElement.pos.x - startX<10) {
             endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
             endY = nextElement.pos.y;
@@ -304,7 +302,6 @@ export class BotBuilder extends Component {
 
   
   render() {
-    debugger
     return(
       <div onMouseMove={this.handleMouseMove} onMouseUp={this.handlerConnectorMouseUp} className="bot-builder-container" id="bot-builder-container">
         {this.getBotBuilderView(JSON.parse(JSON.stringify(this.props.botData)))}

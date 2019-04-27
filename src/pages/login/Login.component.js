@@ -69,7 +69,6 @@ class Login extends Component {
     this.props.showLoader('Validating your credentials.')
     apiCall('POST', endPoints.LOGIN, data)
       .then((response)=>{
-        debugger
           this.props.hideLoader();
           if(response.status === 200) {
               addToLocalStorage('loginData', {...response.data})
