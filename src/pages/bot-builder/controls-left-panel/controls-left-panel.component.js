@@ -4,10 +4,18 @@ import { objectId } from '../../../shared/utils/utils';
 import { BotControlSettingsComponent } from './bot-control-settings.component';
 
 const controlsData = [
-  { icon: 'email', type:"email", name: 'Email', hasOptions: true },
-  { icon: 'email', type:"email", name: 'Email', hasOptions: false },
-  { icon: 'email', type:"email", name: 'Phone', hasOptions: false },
-  { icon: 'email', type:"email", name: 'Number', hasOptions: false }
+  { icon: 'message', type:"MESSAGE", name: 'Message', hasOptions: true },
+  { icon: 'profile', type:"NAME", name: 'Name', hasOptions: true },
+  { icon: 'email', type:"EMAIL", name: 'Email', hasOptions: true },
+  { icon: 'phone', type:"PHONE", name: 'Phone', hasOptions: true },
+  { icon: 'number', type:"NUMBER", name: 'Number', hasOptions: true },
+  { icon: 'yesno', type:"YESNO", name: 'Yes/No', hasOptions: true },
+  { icon: 'file', type:"FILE", name: 'File', hasOptions: true },
+  { icon: 'rating', type:"RATING", name: 'Rating', hasOptions: true },
+  { icon: 'button', type:"BUTTON", name: 'Button', hasOptions: true },
+  { icon: 'address', type:"ADDRESS", name: 'Address', hasOptions: true },
+  { icon: 'scale', type:"SCALE", name: 'Scale', hasOptions: true },
+  { icon: 'list', type:"LIST", name: 'List', hasOptions: true }
 ]
 const additionalBlocksData = [
   { icon: '', name: 'Conditional logic'},
@@ -58,7 +66,9 @@ export class ControlsLeftPanel extends Component {
   render() {
     const getElements = elementsList =>
       elementsList.map((element, index) => <li key={index} role="button" tabIndex="0" onClick={this.addNewElementHandler.bind(this, element)}>
-        <i className={element.icon}></i>
+        <span className="icon-container">
+          <i className={element.icon}></i>
+        </span>
         <span className="name"> { element.name } </span>
       </li>)
     const additionalBlock = elementsList =>

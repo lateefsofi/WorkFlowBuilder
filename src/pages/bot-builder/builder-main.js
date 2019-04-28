@@ -132,6 +132,22 @@ const BotBuilderData = {
       pos: {
         x: 1000,
         y: 100
+      },
+      next: "fdafds54544"
+    },
+    "fdafds54544": {
+      id: "fdafds54544",
+      type: "BUTTON",
+      typeName: "Buttons",
+      heading: "Please select favourite city?",
+      options: [
+        {value: "Srinagar", next: null},
+        {value: "Bangaluru", next: null},
+        {value: "Mumbai", next: null}
+      ],
+      pos: {
+        x: 1500,
+        y: 650
       }
     },
     "fdafds54543": {
@@ -144,9 +160,9 @@ const BotBuilderData = {
         {value: "Bangaluru", next: null},
         {value: "Mumbai", next: null}
       ],
-      pos: {  
+      pos: {
         x: 1000,
-        y: 350
+        y: 450
       }
     }
   }

@@ -4,7 +4,7 @@
   position: fixed;
   width: 292px;
   height: 100%;
-  background: $white;
+  background: $color2;
   z-index: 4;
   padding: 18px;
   box-sizing: border-box;
@@ -60,20 +60,33 @@
       transition: all .3s ease-in-out;
       min-width: 84px;
       text-align: center;
+      outline: none;
       &:hover{
         background-color: rgba(233, 228, 255, 0.3)
+      }
+      .icon-container{
+        margin: 0 auto;
+        margin-bottom: 6px;
+        background: $white;
+        width: 34px;
+        height: 34px;
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+        i{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
       }
       .name{
         display: block;
         font-size: 14px;
-        line-height: 18px;
+        line-height: 16px;
         color: $text-color2;
       }
-      i{
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 10px;
-      }
+      
     }
   }
   .additonal-blocks{

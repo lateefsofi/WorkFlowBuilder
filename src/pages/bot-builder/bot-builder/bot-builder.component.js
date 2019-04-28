@@ -40,6 +40,7 @@ export class BotBuilder extends Component {
     this.connectors = [];
 
     this.deleteElementHandler = this.deleteElementHandler.bind(this);
+    this.drawConnectorsHelper = this.drawConnectorsHelper.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +76,7 @@ export class BotBuilder extends Component {
       elementKey,
       optionIndex
     }
+    console.log("handleConnectorMouseDown*this.startOfNewLine*", this.startOfNewLine);
   }
   handlerConnectorMouseUp(e) {
     this.lineStartCoords = {}
@@ -82,12 +84,17 @@ export class BotBuilder extends Component {
       this.isConnectionNeeded = false;
       if(this.startOfNewLine.elementKey === this.selectedDropElement) {
         //Same as starting elements clear old reference
-        this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = null;
-      } else {
+        if(this.startOfNewLine.optionIndex || typeof this.startOfNewLine.optionIndex === "number") {
+          this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = null;
+        } else {
+          this.props.botData[this.startOfNewLine.elementKey].next = null;
+        }
+      } else if(this.startOfNewLine.optionIndex || typeof this.startOfNewLine.optionIndex === "number") { // Check if the drop element reference is to be added to options
         this.props.botData[this.startOfNewLine.elementKey].options[this.startOfNewLine.optionIndex].next = this.selectedDropElement;
+      } else { // add drop element reference to main element
+        this.props.botData[this.startOfNewLine.elementKey].next = this.selectedDropElement;
       }
       this.props.handleBotDataChange(this.props.botData);
-      // document.getElementById('chat-element-'+this.startOfNewLine.elementKey+'-option-remove'+this.startOfNewLine.optionIndex).style.display="none"
       this.removeLines(this.connectors);
       this.connectors = [];
       this.drawConnectors(this.props.botData)
@@ -125,7 +132,6 @@ export class BotBuilder extends Component {
   }
 
   removeLines(list) {
-    // document.getElementsByClassName('remove').style.display="none";
     list.forEach(svgLine=>{
       svgLine.remove();
     })
@@ -204,39 +210,57 @@ export class BotBuilder extends Component {
     this.connectors.push(svg);
     
   }
+
+  drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, optionsIndex) {
+       // END POINT
+      
+      let endX, endY, isLeftEndPoint= false;
+      if(startY < nextElement.pos.y && nextElement.pos.x - startX<10) {
+        endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
+        endY = nextElement.pos.y;
+      } else if(startY > nextElement.pos.y && nextElement.pos.x - startX<10) {
+        endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
+        endY = nextElement.pos.y + nextElementInDom.offsetHeight+16;
+      }
+      else {
+        isLeftEndPoint = true;
+        endX = nextElement.pos.x;// nextElement.offsetLeft;
+        endY = nextElement.pos.y + nextElementInDom.offsetHeight/2; // nextElement.offsetTop + nextElement.clientHeight/2;
+      }
+      this.drawLine({x: startX, y: startY}, {
+        x: endX,
+        y: endY
+      }, 0, optionsIndex, isLeftEndPoint)
+  }
   
   drawConnectors(elementsData) {
     Object.keys(elementsData).forEach(key => {
+      //Check if the element has next link
+      if(elementsData[key].next) {
+        console.log("Inside main next check");
+        const domElement = document.getElementById(`chat-element-${key}`);
+        const startY = elementsData[key].pos.y + domElement.offsetHeight + 4;
+        const startX = elementsData[key].pos.x + ELEMENT_WIDTH/2 - 2;
+        const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].next}`);
+        const nextElement = elementsData[elementsData[key].next];
+        this.drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, key)
+        console.log("domElement: ", domElement.offsetHeight)
+      }
+      //Check if any option has next link
       for(let i=0; i<elementsData[key].options.length; i++){
         if(elementsData[key].options[i].next) {
           //Show close icons
           // document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
           //START POINT
-          const startDomElement = document.getElementById(`chat-element-${key}`);
+          // const startDomElement = document.getElementById(`chat-element-${key}`);
           // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
           const startY = elementsData[key].pos.y + HEADER_HEIGHT+ELEMENT_HEADER+(i*ELEMENT_OPTION_HEIGHT-ELEMENT_OPTION_MID);
           const startX = elementsData[key].pos.x + ELEMENT_WIDTH;
-          
-          // END POINT
           const nextElement = elementsData[elementsData[key].options[i].next];
           const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].options[i].next}`);
-          let endX, endY, isLeftEndPoint= false;
-          if(startY < nextElement.pos.y && nextElement.pos.x - startX<10) {
-            endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
-            endY = nextElement.pos.y;
-          } else if(startY > nextElement.pos.y && nextElement.pos.x - startX<10) {
-            endX = nextElement.pos.x + nextElementInDom.offsetWidth/2;
-            endY = nextElement.pos.y + nextElementInDom.offsetHeight+16;
-          }
-           else {
-            isLeftEndPoint = true;
-            endX = nextElement.pos.x;// nextElement.offsetLeft;
-            endY = nextElement.pos.y + nextElementInDom.offsetHeight/2; // nextElement.offsetTop + nextElement.clientHeight/2;
-          }
-          this.drawLine({x: startX, y: startY}, {
-            x: endX,
-            y: endY
-          }, 0, i, isLeftEndPoint)
+          console.log("nextElementInDom: ", nextElementInDom);
+          this.drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, i)
+         
         }
       }
     });
@@ -293,7 +317,7 @@ export class BotBuilder extends Component {
                 </div>
               ))
             }
-            <span className="bottom-connector" id={'chat-element-'+item+'-bottom-option'}></span>
+            <span className={`bottom-connector ${data[item].next? 'active':''}`} onMouseDown={e=>this.handleConnectorMouseDown(e, item, null)} id={'chat-element-'+item+'-bottom-option'}></span>
           </div>
         </Draggable>
       )

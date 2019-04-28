@@ -3,6 +3,8 @@ i{
   cursor: pointer;
   overflow: hidden;
   background-size: contain;
+  width: 15px;
+  height: 15px;
 }
 .arrow-left {
   background: url(./assets/icons/arrow_left.svg) no-repeat center bottom;
@@ -11,8 +13,40 @@ i{
 }
 .email {
   background: url(./assets/icons/email.svg) no-repeat center bottom;
-  width: 14px;
-  height: 12px;
+}
+.address {
+  background: url(./assets/icons/address.svg) no-repeat center bottom;
+}
+.button {
+  background: url(./assets/icons/button.svg) no-repeat center bottom;
+}
+.file {
+  background: url(./assets/icons/file.svg) no-repeat center bottom;
+}
+.list {
+  background: url(./assets/icons/list.svg) no-repeat center bottom;
+}
+.message {
+  background: url(./assets/icons/message.svg) no-repeat center bottom;
+}
+.number {
+  background: url(./assets/icons/number.svg) no-repeat center bottom;
+}
+.phone {
+  background: url(./assets/icons/phone.svg) no-repeat center bottom;
+}
+.profile {
+  background: url(./assets/icons/name.svg) no-repeat center bottom;
+}
+.rating {
+  background: url(./assets/icons/rating.svg) no-repeat center bottom;
+  width: 20px;
+}
+.scale {
+  background: url(./assets/icons/scale.svg) no-repeat center bottom;
+}
+.yesno {
+  background: url(./assets/icons/yesno.svg) no-repeat center bottom;
 }
 .copy-icon{
   background: url(./assets/icons/copy_white.svg) no-repeat center bottom;
