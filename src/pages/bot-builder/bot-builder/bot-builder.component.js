@@ -293,6 +293,7 @@ export class BotBuilder extends Component {
                 </div>
               ))
             }
+            <span className="bottom-connector" id={'chat-element-'+item+'-bottom-option'}></span>
           </div>
         </Draggable>
       )

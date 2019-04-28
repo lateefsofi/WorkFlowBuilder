@@ -126,7 +126,7 @@
   }
 }
 
-.connector{
+.connector, .bottom-connector{
   display: inline-block;
   width: 14px;
   height: 14px;
@@ -134,12 +134,9 @@
   background: $white;
   border-radius: 50px;
   cursor: pointer;
-  right: -31px;
   transition: border .1s ease-in-out;
   border: 1px solid $border-color;
   color: $text-color3;
-  top: 50%;
-  transform: translateY(-50%);
   &:hover.active::after { 
     content: "x";
     top: -5px;
@@ -150,6 +147,16 @@
   &:hover{
     background-color: $border-color;
   }
+}
+.connector{
+  top: 50%;
+  right: -31px;
+  transform: translateY(-50%);
+}
+.bottom-connector{
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 // .remove {
 //   display: inline-block;
