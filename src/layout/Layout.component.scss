@@ -11,7 +11,7 @@
     top: 0;
     left: 0;
     padding-left: $leftNav;
-    background-color: green;
+    background-color: $shadow-color;
     z-index: 8;
     box-sizing: border-box;
   }
@@ -24,6 +24,16 @@
     background-color: $color1;
     z-index: 9;
     box-sizing: border-box;
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      li{
+        display: block;
+        text-align: center;
+        margin: 10px 0;
+      }
+    }
   }
   .main-container {
     margin: $topNav 0 0 $leftNav; 

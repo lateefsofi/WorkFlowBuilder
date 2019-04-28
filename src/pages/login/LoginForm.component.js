@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { TextField, Button  } from '@material-ui/core';
+import { Form, FormGroup, Button, Label, Input } from 'reactstrap';
 
 import { ErrorMessage } from '../../shared/components/errorMessage/ErrorMessage.component';
 
@@ -21,44 +21,47 @@ const LoginForm = (props) => {
     }
     return (
         <div className="login-container">
-          <form  noValidate autoComplete="off" onSubmit={props.handleSubmit}>
+          <Form  noValidate autoComplete="off" onSubmit={props.handleSubmit}>
               <h3>
                   Sign in to your account
               </h3>
               <div>
-                  <TextField
+                <FormGroup>
+                    <Label for="email">Email</Label>
+                    <Input type="email" name="email" id="email" placeholder="herobot@gmail.com" />
+                </FormGroup>
+                {/* <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>User Name</Form.Label>
+                    <Form.Control type="email" placeholder="name@example.com" />
+                </Form.Group> */}
+                  {/* <TextField
                   id="email"
                   label="User Name"
                   value={props.email.value}
                   onChange={props.handleChange('email')}
                   onBlur={props.handleBlurEvent('email')}
                   margin="normal"
-                  />
+                  /> */}
                   {
                       errorCheck('email')
                   }
               </div>
               <div>
-                  <TextField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={props.password.value}
-                  onChange={props.handleChange('password')}
-                  onBlur={props.handleBlurEvent('password')}
-                  margin="normal"
-                  />
+                <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input type="password" name="password" id="password" />
+                </FormGroup>
                   {
                       errorCheck('password')
                   }
               </div>
               <div className="actions">
-                  <NavLink className="link" to="/registration" exact={true}>Not registered?</NavLink>
+                  {/* <NavLink className="link" to="/registration" exact={true}>Not registered?</NavLink> */}
                   <Button type="submit" variant="contained" color="primary">
                       Login
                   </Button>
               </div>
-          </form>
+          </Form>
         </div>
     );
 }

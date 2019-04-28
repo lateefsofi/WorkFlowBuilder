@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, FormGroup, Button, Label, Input } from 'reactstrap';
 
 import './forms.scss';
 
@@ -37,16 +38,34 @@ export class OptionsFormComponent extends Component {
     })
   }
   getOptions(list) {
-    return list.map((item, index)=><li key={index}><input type="text" value={item.value} onChange={e => this.onOptionChangehandler(e, index)}/></li>);
+    return list.map((item, index)=>
+    <li key={index}>
+        <Input 
+          type="text"
+          placeholder="Option text"
+          value={item.value} 
+          onChange={e => this.onOptionChangehandler(e, index)}
+          />
+    </li>);
   }
   render() {
     return(
-      <form className="element-form" onSubmit={()=>this.props.saveElementPropsHandler(this.state.element)}>
+      <Form className="element-form" onSubmit={()=>this.props.saveElementPropsHandler(this.state.element)}>
         <div className="header">
-          <input type="text" value={this.state.element.heading} onChange={e=>this.onTextChangeHandler(e, 'heading')}/>
+          <FormGroup>
+              {/* <Label for="email">Email</Label> */}
+              <Input 
+                type="email" 
+                name="email" 
+                id="email" 
+                placeholder="herobot@gmail.com"
+                value={this.state.element.heading} 
+                onChange={e=>this.onTextChangeHandler(e, 'heading')}
+                />
+          </FormGroup>
         </div>
         <div>
-          <button type="button" onClick={this.addNewOptionhandler}>+ Add</button>
+          <Button type="button" onClick={this.addNewOptionhandler}>+ Add</Button>
         </div>
         <ul>
           {
@@ -54,9 +73,9 @@ export class OptionsFormComponent extends Component {
           }
         </ul>
         <div className="actions">
-          <button type="submit">Save</button>
+          <Button type="submit">Save</Button>
         </div>
-      </form>
+      </Form>
     );
   }
 }

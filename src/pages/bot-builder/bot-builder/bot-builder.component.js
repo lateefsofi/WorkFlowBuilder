@@ -10,10 +10,10 @@ import getSvgLineCoords from '../builder-helpers/get-svg-line-coords';
 import { createSvgElement, getSvgContainer, setPathAttributes, setMarkerAttributes, setArrowAttributes } from '../builder-helpers/elements';
 import { getCubicBezairCoords } from '../builder-helpers/coords-calculator';
 
-const HEADER_HEIGHT = 54;
+const HEADER_HEIGHT = 50;
 const ARROW_DIMS = 6;
 const ELEMENT_HEADER = 66;
-const ELEMENT_OPTION_HEIGHT = 39;
+const ELEMENT_OPTION_HEIGHT = 47;
 const ELEMENT_OPTION_MID = 10;
 const ELEMENT_WIDTH = 264;
 const LeftNavWidth = 56;
@@ -289,8 +289,8 @@ export class BotBuilder extends Component {
                 <div className="options" style={{...borderColor, ...ligtBackgroundColor, ...color} } key={itemIndex+'option'+optionIndex}>
                   <span className="text">{option.value} </span>
                   <span className="line"></span>
-                  <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className="connector"></span>
-                  { option.next && <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>}
+                  <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className={`connector ${option.next? 'active':''}`}></span>
+                  {/* { option.next && <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>} */}
                 </div>
               ))
             }

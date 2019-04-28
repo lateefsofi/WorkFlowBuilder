@@ -61,9 +61,9 @@
     box-shadow: 0px 0px 20px 0px $border-color;
     border: 1px solid $color1;
     .actions{
-      height: 18px;
+      height: 26px;
       top: -26px;
-      padding: 5px 10px 2px;
+      padding: 3px 10px 2px;
     }
   }
   .options{
@@ -86,9 +86,9 @@
     }
     .line{
       position: absolute;
-      right: -15px;
+      right: -18px;
       border-bottom: 1px solid $border-color;
-      width: 16px;
+      width: 18px;
       top: 50%;
       height: 0;
       display: inline-block;
@@ -140,23 +140,30 @@
   color: $text-color3;
   top: 50%;
   transform: translateY(-50%);
+  &:hover.active::after { 
+    content: "x";
+    top: -5px;
+    position: absolute;
+    left: 3px;
+    font-size: 14px;
+  }
   &:hover{
     background-color: $border-color;
   }
 }
-.remove {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  color: $white;
-  cursor: pointer;
-  right: -30px;
-  text-align: center;
-  background: $color1;
-  border-radius: 50px;
-  font-size: 11px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: inline-block;
-}
+// .remove {
+//   display: inline-block;
+//   width: 14px;
+//   height: 14px;
+//   position: absolute;
+//   color: $white;
+//   cursor: pointer;
+//   right: -30px;
+//   text-align: center;
+//   background: $color1;
+//   border-radius: 50px;
+//   font-size: 11px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   display: inline-block;
+// }

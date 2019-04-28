@@ -8,7 +8,6 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { TextField, Button  } from '@material-ui/core';
 
 import { ErrorMessage } from '../../shared/components/errorMessage/ErrorMessage.component';
 
@@ -26,46 +25,46 @@ const RegForm = (props) => {
                     Sign up to create your account
                 </h3>
                 <div>
-                    <TextField
+                    {/* <TextField
                     id="firstName"
                     label="First Name"
                     value={props.firstName.value}
                     onChange={props.handleChange('firstName')}
                     onBlur={props.handleBlurEvent('firstName')}
                     margin="normal"
-                    />
+                    /> */}
                     {
                         errorCheck('firstName')
                     }
                 </div>
                 <div>
-                    <TextField
+                    {/* <TextField
                     id="lastName"
                     label="Last Name"
                     value={props.lastName.value}
                     onChange={props.handleChange('lastName')}
                     onBlur={props.handleBlurEvent('lastName')}
                     margin="normal"
-                    /> 
+                    />  */}
                     {
                         errorCheck('lastName')
                     }
                 </div>
                 <div>
-                    <TextField
+                    {/* <TextField
                     id="email"
                     label="email"
                     value={props.email.value}
                     onChange={props.handleChange('email')}
                     onBlur={props.handleBlurEvent('email')}
                     margin="normal"
-                    /> 
+                    />  */}
                     {
                         errorCheck('email')
                     }
                 </div>
                 <div>
-                    <TextField
+                    {/* <TextField
                     id="password"
                     label="Password"
                     type="password"
@@ -73,13 +72,13 @@ const RegForm = (props) => {
                     onChange={props.handleChange('password')}
                     onBlur={props.handleBlurEvent('password')}
                     margin="normal"
-                    /> 
+                    />  */}
                     {
                         errorCheck('password')
                     }
                 </div>
                 <div>
-                    <TextField
+                    {/* <TextField
                     id="confirm-password"
                     label="Confirm Password"
                     type="password"
@@ -87,14 +86,14 @@ const RegForm = (props) => {
                     onChange={props.handleChange('confirmPassword')}
                     onBlur={props.handleBlurEvent('confirmPassword')}
                     margin="normal"
-                    /> 
+                    />  */}
                     <ErrorMessage errors={props.validationErrors} field='confirmPassword'/>
                 </div>
                 <div className="actions">
-                    <NavLink className="link" to="/" exact={true}>Already registered?</NavLink>
-                    <Button type="submit" variant="contained" color="primary">
+                    {/* <NavLink className="link" to="/" exact={true}>Already registered?</NavLink> */}
+                    <button type="submit" variant="contained" color="primary">
                         Sign up
-                    </Button>
+                    </button>
                 </div>
             </form>
         </div>

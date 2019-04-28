@@ -10,16 +10,16 @@ export class BuilderTopNav extends Component{
       isEdit: false,
 
     }
-    this.toggleEditBotName = this.toggleEditBotName.bind(this);
+    // this.toggleEditBotName = this.toggleEditBotName.bind(this);
   }
 
   componentDidMount() {
 
   }
 
-  toggleEditBotName() {
-    this.setState((prevState)=> ({isEdit: !prevState.isEdit}));
-  }
+  // toggleEditBotName() {
+  //   this.setState((prevState)=> ({isEdit: !prevState.isEdit}));
+  // }
 
   render() {
     return(
@@ -27,16 +27,19 @@ export class BuilderTopNav extends Component{
         <div className="builder-top-nav-left">
           <span className="bot-name">
           {
-            this.state.isEdit?  
-            <input type="text" value={this.props.botName} onChange={this.props.onNameChangeHandler}/>:
-            this.props.botName
+            // this.state.isEdit?  
+            <input type="text" value={this.props.botName} onChange={this.props.onNameChangeHandler}/>
+            
+            // :
+            // this.props.botName
           }
+          {/* <i className="arrow-left"></i> */}
           </span>
-          {
+          {/* {
             this.state.isEdit?
             <i onClick={this.toggleEditBotName}>x</i>:
-            <i onClick={this.toggleEditBotName}>i</i>
-          }
+          } */}
+          
         </div>
         <div className="builder-top-nav-mid">
           <Link to="/bot-builder">Design</Link>
