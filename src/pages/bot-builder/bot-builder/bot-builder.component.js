@@ -290,7 +290,6 @@ export class BotBuilder extends Component {
                   <span className="text">{option.value} </span>
                   <span className="line"></span>
                   <span id={'chat-element-'+item+'-option-'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)}  className={`connector ${option.next? 'active':''}`}></span>
-                  {/* { option.next && <span id={'chat-element-'+item+'-option-remove'+optionIndex} onMouseDown={e=>this.handleConnectorMouseDown(e, item, optionIndex)} className="remove">x</span>} */}
                 </div>
               ))
             }
@@ -305,7 +304,6 @@ export class BotBuilder extends Component {
     return(
       <div onMouseMove={this.handleMouseMove} onMouseUp={this.handlerConnectorMouseUp} className="bot-builder-container" id="bot-builder-container">
         {this.getBotBuilderView(JSON.parse(JSON.stringify(this.props.botData)))}
-        {/* {this.drawConnectors(BotBuilderData)} */}
       </div>
     );
   }
