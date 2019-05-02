@@ -1,10 +1,35 @@
+@import 'src/theme/variables.scss';
+
 .element-form{
   display: block;
-  width: 100%;
+  width: 264px;
+  overflow: hidden;
   position: relative;
+  .header-title{
+    font-size: 16px;
+    font-weight: normal;
+    margin: 24px 0;
+  }
   div{
     display: block;
     width: 100%;
     position: relative;
   }
+  .actions {
+    margin-top: 24px;
+  }
+}
+
+.ql-toolbar.ql-snow{
+  border: none;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow{
+  border: 1px solid #ccc;
+}
+.ql-container.ql-snow{
+  margin-top: 14px;
+}
+.ql-editor{
+  background: $white;
+  height: 130px;
 }

@@ -40,10 +40,13 @@ export class BuilderMain extends Component {
     newElement.id = newObjectId;
     newElement.pos.x += 20; 
     newElement.pos.y += 20; 
-    newElement.options = newElement.options.map(item => {
-      item.next=null;
-      return item;
-    })
+    newElement.next = null;
+    if (newElement.options) {
+      newElement.options = newElement.options.map(item => {
+        item.next=null;
+        return item;
+      })
+    }
     this.setState({
       builderData: {
         ...this.state.builderData,
@@ -55,12 +58,17 @@ export class BuilderMain extends Component {
     let updatedElements = JSON.parse(JSON.stringify(this.state.builderData)); // { ...this.state.builderData };
     delete updatedElements[elementId];
     Object.keys(updatedElements).map(key =>{
-      updatedElements[key].options = updatedElements[key].options.map(option => {
-        if(option.next === elementId) {
-          option.next = null;
-        }
-        return option;
-      })
+      if(updatedElements[key].next === elementId) {
+        updatedElements[key].next = null;
+      }
+      if(updatedElements[key].options) {
+        updatedElements[key].options = updatedElements[key].options.map(option => {
+          if(option.next === elementId) {
+            option.next = null;
+          }
+          return option;
+        })
+      }
     } )
     this.setState({
       builderData: JSON.parse(JSON.stringify(updatedElements))
@@ -107,7 +115,7 @@ const BotBuilderData = {
     "fdafds54541": {
       id: "fdafds54541",
       type: "EMAIL",
-      typeName: "Email",
+      name: "Email",
       heading: "Please select your hobby?",
       options: [
         {value: "Cricket", next: "fdafds54542"},
@@ -122,7 +130,7 @@ const BotBuilderData = {
     "fdafds54542": {
       id: "fdafds54542",
       type: "PHONE",
-      typeName: "Phone Number",
+      name: "Phone Number",
       heading: "Please select favrite language?",
       options: [
         {value: "C", next: null},
@@ -138,7 +146,7 @@ const BotBuilderData = {
     "fdafds54544": {
       id: "fdafds54544",
       type: "BUTTON",
-      typeName: "Buttons",
+      name: "Buttons",
       heading: "Please select favourite city?",
       options: [
         {value: "Srinagar", next: null},
@@ -153,7 +161,7 @@ const BotBuilderData = {
     "fdafds54543": {
       id: "fdafds54543",
       type: "BUTTON",
-      typeName: "Buttons",
+      name: "Buttons",
       heading: "Please select favourite city?",
       options: [
         {value: "Srinagar", next: null},

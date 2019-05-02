@@ -2,27 +2,11 @@ import React, { Component } from 'react';
 import './controls-left-panel.component.scss';
 import { objectId } from '../../../shared/utils/utils';
 import { BotControlSettingsComponent } from './bot-control-settings.component';
+import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 
-const controlsData = [
-  { icon: 'message', type:"MESSAGE", name: 'Message', hasOptions: true },
-  { icon: 'profile', type:"NAME", name: 'Name', hasOptions: true },
-  { icon: 'email', type:"EMAIL", name: 'Email', hasOptions: true },
-  { icon: 'phone', type:"PHONE", name: 'Phone', hasOptions: true },
-  { icon: 'number', type:"NUMBER", name: 'Number', hasOptions: true },
-  { icon: 'yesno', type:"YESNO", name: 'Yes/No', hasOptions: true },
-  { icon: 'file', type:"FILE", name: 'File', hasOptions: true },
-  { icon: 'rating', type:"RATING", name: 'Rating', hasOptions: true },
-  { icon: 'button', type:"BUTTON", name: 'Button', hasOptions: true },
-  { icon: 'address', type:"ADDRESS", name: 'Address', hasOptions: true },
-  { icon: 'scale', type:"SCALE", name: 'Scale', hasOptions: true },
-  { icon: 'list', type:"LIST", name: 'List', hasOptions: true }
-]
-const additionalBlocksData = [
-  { icon: '', name: 'Conditional logic'},
-  { icon: '', name: 'Goals'},
-  { icon: '', name: 'Stripe'},
-  { icon: '', name: 'Appointmant'},
-]
+import { controlsData, additionalBlocksData }from './element-data';
+
+
 export class ControlsLeftPanel extends Component {
   constructor (props){
     super(props);
@@ -47,15 +31,10 @@ export class ControlsLeftPanel extends Component {
   addNewElementHandler(element) {
     this.setState({
       selectedElement: {
+        ...element,
         id: objectId(),
-        type: element.type,
-        typeName: element.name,
-        heading: "xxxxxxx",
-        options: [
-          {value: "Srinagarxxxx", next: null},
-          {value: "Bangaluruxxxx", next: null},
-          {value: "Mumbaixxxx", next: null}
-        ],
+        heading: "",
+        placeHolder: element.placeHolder || '',
         pos: {  
           x: window.scrollX + window.innerWidth/2,
           y: window.scrollY + window.innerHeight/2 - 150

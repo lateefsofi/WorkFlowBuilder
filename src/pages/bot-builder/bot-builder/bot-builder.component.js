@@ -21,6 +21,7 @@ const boundaries = {
   left: 292,
   top: 0
 }
+let isDragging = false;
 
 export class BotBuilder extends Component {
   constructor (props){
@@ -237,33 +238,47 @@ export class BotBuilder extends Component {
     Object.keys(elementsData).forEach(key => {
       //Check if the element has next link
       if(elementsData[key].next) {
-        console.log("Inside main next check");
         const domElement = document.getElementById(`chat-element-${key}`);
         const startY = elementsData[key].pos.y + domElement.offsetHeight + 4;
         const startX = elementsData[key].pos.x + ELEMENT_WIDTH/2 - 2;
         const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].next}`);
         const nextElement = elementsData[elementsData[key].next];
         this.drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, key)
-        console.log("domElement: ", domElement.offsetHeight)
       }
       //Check if any option has next link
-      for(let i=0; i<elementsData[key].options.length; i++){
-        if(elementsData[key].options[i].next) {
-          //Show close icons
-          // document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
-          //START POINT
-          // const startDomElement = document.getElementById(`chat-element-${key}`);
-          // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
-          const startY = elementsData[key].pos.y + HEADER_HEIGHT+ELEMENT_HEADER+(i*ELEMENT_OPTION_HEIGHT-ELEMENT_OPTION_MID);
-          const startX = elementsData[key].pos.x + ELEMENT_WIDTH;
-          const nextElement = elementsData[elementsData[key].options[i].next];
-          const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].options[i].next}`);
-          console.log("nextElementInDom: ", nextElementInDom);
-          this.drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, i)
-         
+      if (elementsData[key].options) {
+        for(let i=0; i<elementsData[key].options.length; i++){
+          if(elementsData[key].options[i].next) {
+            //Show close icons
+            // document.getElementById('chat-element-'+key+'-option-remove'+i).style.display="inline-block"
+            //START POINT
+            // const startDomElement = document.getElementById(`chat-element-${key}`);
+            // const optionId = document.getElementById(`chat-element-${key}-option-${i}`);
+            const startY = elementsData[key].pos.y + HEADER_HEIGHT+ELEMENT_HEADER+(i*ELEMENT_OPTION_HEIGHT-ELEMENT_OPTION_MID);
+            const startX = elementsData[key].pos.x + ELEMENT_WIDTH;
+            const nextElement = elementsData[elementsData[key].options[i].next];
+            const nextElementInDom = document.getElementById(`chat-element-${elementsData[key].options[i].next}`);
+            this.drawConnectorsHelper(startX, startY, nextElementInDom, nextElement, i)
+           
+          }
         }
       }
     });
+  }
+
+  elementMouseUpHandler(elementDetails) {
+    if(!isDragging) {
+      //Edit the click element
+    }
+    isDragging = false;
+  }
+
+  elementMouseDownHandler() {
+    isDragging = false;
+  }
+
+  elementMouseMoveHandler() {
+    isDragging = true;
   }
 
   deleteElementHandler(item) {
@@ -302,13 +317,14 @@ export class BotBuilder extends Component {
               <i className="copy-icon" onClick={()=>this.props.copyElementHandler(item)}></i>
               <i className="delete-icon" onClick={()=> this.deleteElementHandler(item)}></i>
             </div>
-            <div className="drag-area handle"></div>
+            <div className="drag-area handle" onMouseDown={this.elementMouseDownHandler} onMouseMove={this.elementMouseMoveHandler} onMouseUp={()=>this.elementMouseUpHandler(data[item])}></div>
             <div className="controlType">
               <span style={backgroundColor}></span>
-                {data[item].typeName}
+                {data[item].name}
             </div>
-            <div className="handle heading">{data[item].heading}</div>
-            {
+            <div className="handle heading" dangerouslySetInnerHTML={{__html: data[item].heading}}></div>
+            {/* <div className="handle heading">{data[item].heading}</div> */}
+            { data[item].options &&
               data[item].options.map((option, optionIndex)=>(
                 <div className="options" style={{...borderColor, ...ligtBackgroundColor, ...color} } key={itemIndex+'option'+optionIndex}>
                   <span className="text">{option.value} </span>

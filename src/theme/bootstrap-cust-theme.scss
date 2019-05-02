@@ -1,7 +1,8 @@
 
-$primary: #00d991;
+@import './variables.scss';
+
 $theme-colors: (
-  "primary": $primary,
+  "primary": $color1,
   "danger": #ff4136
   );
   @import "bootstrap/scss/bootstrap.scss";
