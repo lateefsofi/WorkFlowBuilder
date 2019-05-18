@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import { BuilderTopNav } from './builder-top-nav/builder-top-nav.component';
-import { ControlsLeftPanel } from './controls-left-panel/controls-left-panel.component';
-import { BotBuilder } from './bot-builder/bot-builder.component';
+import ControlsLeftPanel from './controls-left-panel/controls-left-panel.component';
+import BotBuilder  from './bot-builder/bot-builder.component';
 
 import { isEmpty, objectId } from '../../shared/utils/utils';
 import './builder-main.scss';
@@ -111,67 +111,86 @@ export class BuilderMain extends Component {
 
 const BotBuilderData = {
   name: "Untitled Bot",
-  data: {
-    "fdafds54541": {
-      id: "fdafds54541",
-      type: "EMAIL",
-      name: "Email",
-      heading: "Please select your hobby?",
-      options: [
-        {value: "Cricket", next: "fdafds54542"},
-        {value: "FootBall", next: null},
-        {value: "Volleyball", next: "fdafds54543"}
-      ],
-      pos: {
-        x: 460,
-        y: 200
-      }
-    },
-    "fdafds54542": {
-      id: "fdafds54542",
-      type: "PHONE",
-      name: "Phone Number",
-      heading: "Please select favrite language?",
-      options: [
-        {value: "C", next: null},
-        {value: "C++", next: null},
-        {value: "JAVA", next: null}
-      ],
-      pos: {
-        x: 1000,
-        y: 100
-      },
-      next: "fdafds54544"
-    },
-    "fdafds54544": {
-      id: "fdafds54544",
-      type: "BUTTON",
-      name: "Buttons",
-      heading: "Please select favourite city?",
-      options: [
-        {value: "Srinagar", next: null},
-        {value: "Bangaluru", next: null},
-        {value: "Mumbai", next: null}
-      ],
-      pos: {
-        x: 1500,
-        y: 650
-      }
-    },
-    "fdafds54543": {
-      id: "fdafds54543",
-      type: "BUTTON",
-      name: "Buttons",
-      heading: "Please select favourite city?",
-      options: [
-        {value: "Srinagar", next: null},
-        {value: "Bangaluru", next: null},
-        {value: "Mumbai", next: null}
-      ],
-      pos: {
-        x: 1000,
-        y: 450
-      }
-    }
-  }
+  // data: {
+  //   "fdafds54541": {
+  //     id: "fdafds54541",
+  //     type: "EMAIL",
+  //     name: "Email",
+  //     heading: "Please select your hobby?",
+  //     options: [
+  //       {value: "Cricket", next: "fdafds54542"},
+  //       {value: "FootBall", next: null},
+  //       {value: "Volleyball", next: "fdafds54543"}
+  //     ],
+  //     pos: {
+  //       x: 460,
+  //       y: 200
+  //     }
+  //   },
+  //   "fdafds54542": {
+  //     id: "fdafds54542",
+  //     type: "PHONE",
+  //     name: "Phone Number",
+  //     heading: "Please select favrite language?",
+  //     options: [
+  //       {value: "C", next: null},
+  //       {value: "C++", next: null},
+  //       {value: "JAVA", next: null}
+  //     ],
+  //     pos: {
+  //       x: 1000,
+  //       y: 100
+  //     },
+  //     next: "fdafds54544"
+  //   },
+  //   "fdafds54544": {
+  //     id: "fdafds54544",
+  //     type: "BUTTON",
+  //     name: "Buttons",
+  //     heading: "Please select favourite city?",
+  //     options: [
+  //       {value: "Srinagar", next: null},
+  //       {value: "Bangaluru", next: null},
+  //       {value: "Mumbai", next: null}
+  //     ],
+  //     pos: {
+  //       x: 1500,
+  //       y: 650
+  //     }
+  //   },
+  //   "fdafds54543": {
+  //     id: "fdafds54543",
+  //     type: "BUTTON",
+  //     name: "Buttons",
+  //     heading: "Please select favourite city?",
+  //     options: [
+  //       {value: "Srinagar", next: null},
+  //       {value: "Bangaluru", next: null},
+  //       {value: "Mumbai", next: null}
+  //     ],
+  //     pos: {
+  //       x: 1000,
+  //       y: 450
+  //     }
+  //   },
+  //   "5cceefb6db0177346ed59a9c": {
+  //     icon: "message",
+  //     type: "MESSAGE",
+  //     name: "Message",
+  //     messages: [
+  //       {
+  //         text: "<p>sdssds</p>"
+  //       }
+  //     ],
+  //     "hasOptions": false,
+  //     "placeholder": "Type your message here",
+  //     "id": "5cceefb6db0177346ed59a9c",
+  //     "heading": "",
+  //     "placeHolder": "",
+  //     "pos": {
+  //       "x": 800,
+  //       "y": 142
+  //     }
+  //   }
+  // }
 }

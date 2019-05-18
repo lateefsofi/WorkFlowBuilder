@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import LoaderReducer from './loader/reducer';
 import AuthReducer from './auth/reducer';
+import BotBuilderReducer from './bot-builder/reducer';
 
 // import registerServiceWorker from './registerServiceWorker';
 // const logger = store => { // middleware
@@ -18,7 +19,8 @@ import AuthReducer from './auth/reducer';
 
 const rootReducer = combineReducers({
     LoaderReducer,
-    AuthReducer
+    AuthReducer,
+    BotBuilderReducer
 });
 
 export default rootReducer;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Button, Label, Input } from 'reactstrap';
+import { Form, Button, Input } from 'reactstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -8,8 +8,7 @@ import './forms.scss';
 const modules = {
   toolbar: [
     ['bold', 'italic', 'underline', 'strike', 'link'],
-    [ 
-     {'indent': '-1'}, {'indent': '+1'}]
+    [ {'indent': '-1'}, {'indent': '+1'}],
     ['clean']
   ],
   clipboard: {
@@ -52,7 +51,6 @@ export class OptionsFormComponent extends Component {
     })
   }
   addNewOptionhandler() {
-    debugger
     const element = {...this.state.element};
     element.options.push(
       {value: "New option", next: null}

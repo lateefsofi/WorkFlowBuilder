@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-
-import { OptionsFormComponent } from './forms/options-form.component';
-import { MessageFormComponent } from './forms/message-form.component';
+import { connect } from 'react-redux';
+import { 
+  MessageFormComponent,
+  NameFormComponent,
+  NumberFormComponent,
+  PhoneFormComponent,
+  EmailFormComponent,
+  YesNoComponent,
+  AddressFormComponent
+} from './forms';
 import { TYPES } from '../../../shared/constants/bot-control-types.constants';
+import { setEditData } from '../../../store/bot-builder/actions';
 
 export class BotControlSettingsComponent extends Component {
   saveElementPropsHandler(element) {
@@ -15,23 +23,29 @@ export class BotControlSettingsComponent extends Component {
         return (<MessageFormComponent element={elementDetails}
           saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>);
       case TYPES.NAME:
-        break;
-      case TYPES.EMAIL:
-        break;
+        return (<NameFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
+      case TYPES.EMAIL: EmailFormComponent
+        return (<NameFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.PHONE:
-        break;
+        return (<PhoneFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.NUMBER:
-        break;
+        return (<NumberFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.YESNO:
-        break;
+        return (<YesNoComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.FILE:
         break;
       case TYPES.RATING:
         break;
       case TYPES.BUTTON:
         break;
-      case TYPES.ADDRESS:
-        break;
+      case TYPES.ADDRESS: 
+        return (<AddressFormComponent element={elementDetails}
+         saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.SCALE:
         break;
       case TYPES.LIST:
@@ -42,7 +56,7 @@ export class BotControlSettingsComponent extends Component {
     }
   }
   render(){
-    const {elementDetailsSaveHandler, elementDetails, toggleControlSettings} = this.props;
+    const { elementDetails, toggleControlSettings } = this.props;
     return(
       <section className={`control-properties-section ${elementDetails?'active':''}`}>
         { elementDetails && <div className="back-container">
@@ -50,7 +64,7 @@ export class BotControlSettingsComponent extends Component {
           </i>
         </div>
         }
-        { elementDetails &&
+        { this.props.elementDetails &&
           this.getFormhandler(elementDetails)
           // <div>
           //   <OptionsFormComponent 
@@ -66,4 +80,17 @@ export class BotControlSettingsComponent extends Component {
   }
 }
 
-export default BotControlSettingsComponent;
+
+const mapStateToProps = state => {
+  return {
+    elementDetails: state.BotBuilderReducer.selectedElement
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setEditData: (payload) => dispatch(setEditData(payload))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BotControlSettingsComponent);

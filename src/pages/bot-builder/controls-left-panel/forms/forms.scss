@@ -2,13 +2,14 @@
 
 .element-form{
   display: block;
-  width: 264px;
+  width: 232px;
   overflow: hidden;
   position: relative;
   .header-title{
     font-size: 16px;
     font-weight: normal;
     margin: 24px 0;
+    line-height: 18px;
   }
   div{
     display: block;
@@ -16,7 +17,51 @@
     position: relative;
   }
   .actions {
-    margin-top: 24px;
+  }
+  .add-new-message-container{
+    margin: 18px 0;
+    display: flex; 
+    align-items: center;
+    span{
+      font-size: 14px;
+      line-height: 16px;
+      color: $text-color1;
+      font-family: proxima-nova, sans-serif;
+      font-style: normal;
+      font-weight: 600;
+    }
+    button{
+      width: 20px;
+      height: 20px;
+      position: relative;
+      border-radius: 50px;
+      margin-left: 10px;
+      padding: 0;
+      border: 1px solid $icon-color1;
+      color: $icon-color1;
+      .centered-element{
+        width: 10px;
+        height: 10px;
+        top: 0;
+        color: $icon-color1;
+      }
+    }
+  }
+  .remove-option {
+    position: absolute;
+    right: 5px;
+    top: 54px;
+    z-index: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  .variable{
+    padding: 4px 12px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    border-radius: 8px;
   }
 }
 
@@ -31,5 +76,37 @@
 }
 .ql-editor{
   background: $white;
-  height: 130px;
+  height: 100px;
+}
+
+.check-box-container{
+  margin: 10px 0px 22px 0px;
+  label{
+    font-size: 12px;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 400;
+    margin-top: 15px;
+    label:first-child{
+      margin-top: 0;
+    }
+  }
+}
+
+.controls-left-panel .option-container{
+  li{
+    padding: 0;
+    display: block;
+    text-align: left;
+    margin-top: 16px;
+    &:first-child{
+      margin-top: 22px;
+    }
+    .item {
+      width: 110px;
+      padding: 6px;
+      text-align: center;
+      border: 1px solid $icon-color1;
+      background: $color4;
+    }
+  }
 }

@@ -7,7 +7,6 @@
  **/
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { ErrorMessage } from '../../shared/components/errorMessage/ErrorMessage.component';
 

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import './controls-left-panel.component.scss';
 import { objectId } from '../../../shared/utils/utils';
-import { BotControlSettingsComponent } from './bot-control-settings.component';
+import BotControlSettingsComponent from './bot-control-settings.component';
+import { setEditData } from '../../../store/bot-builder/actions';
 import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 
 import { controlsData, additionalBlocksData }from './element-data';
@@ -17,20 +20,16 @@ export class ControlsLeftPanel extends Component {
     this.elementDetailsSaveHandler = this.elementDetailsSaveHandler.bind(this);
     this.toggleControlSettings = this.toggleControlSettings.bind(this);
   }
-  toggleControlSettings(selectedElement) {
-    this.setState({
-      selectedElement: selectedElement || null
-    })
+  toggleControlSettings() {
+    this.props.setEditData(null);
   }
   elementDetailsSaveHandler(updatedElement) {
     this.props.handleAddUpdateBotElement(updatedElement);
-    this.setState({
-      selectedElement: null
-    })
+    this.props.setEditData(null);
   }
   addNewElementHandler(element) {
-    this.setState({
-      selectedElement: {
+    element = JSON.parse(JSON.stringify(element));
+    this.props.setEditData({
         ...element,
         id: objectId(),
         heading: "",
@@ -39,9 +38,9 @@ export class ControlsLeftPanel extends Component {
           x: window.scrollX + window.innerWidth/2,
           y: window.scrollY + window.innerHeight/2 - 150
         }
-      }
     });
   }
+  
   render() {
     const getElements = elementsList =>
       elementsList.map((element, index) => <li key={index} role="button" tabIndex="0" onClick={this.addNewElementHandler.bind(this, element)}>
@@ -71,7 +70,6 @@ export class ControlsLeftPanel extends Component {
           </div>
         </section>
         <BotControlSettingsComponent 
-          elementDetails={this.state.selectedElement} 
           elementDetailsSaveHandler={this.elementDetailsSaveHandler}
           toggleControlSettings={this.toggleControlSettings}
           />
@@ -79,3 +77,5 @@ export class ControlsLeftPanel extends Component {
     );
   }
 }
+
+export default connect(null, { setEditData })(ControlsLeftPanel);

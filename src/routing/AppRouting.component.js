@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { connect } from "react-redux";
 import Registration from '../pages/registration/Registration.component';
 import Login from '../pages/login/Login.component';
 import { BuilderMain } from '../pages/bot-builder/builder-main';
@@ -40,16 +39,4 @@ class AppRouting extends Component {
     }
 }
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.AuthReducer.isLoggedIn
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-};
-
-// export default connect(mapStateToProps)(AppRouting);
 export default AppRouting;

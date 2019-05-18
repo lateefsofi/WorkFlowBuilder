@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-import { controlColors } from '../../../shared/constants';
+import { connect } from 'react-redux';
+
+import { controlColors, BOT_CONTROL_TYPES } from '../../../shared/constants';
+import { setEditData } from '../../../store/bot-builder/actions';
 
 import endPoints from '../../../shared/constants/endPoints.constants';
 import './bot-builder.component.scss';
@@ -269,6 +272,7 @@ export class BotBuilder extends Component {
   elementMouseUpHandler(elementDetails) {
     if(!isDragging) {
       //Edit the click element
+      this.props.setEditData(elementDetails);
     }
     isDragging = false;
   }
@@ -284,6 +288,33 @@ export class BotBuilder extends Component {
   deleteElementHandler(item) {
     this.removeLines(this.connectors);
     this.props.deleteElementHandler(item)
+  }
+
+  getHeadings(element) {
+    switch(element.type){
+      case BOT_CONTROL_TYPES.MESSAGE:
+        return (<React.Fragment>
+          {element.messages.map((message, index) => <div key={index} className="handle heading" dangerouslySetInnerHTML={{__html: message.text}}></div> )}
+        </React.Fragment>)
+      case BOT_CONTROL_TYPES.NAME:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.EMAIL:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.PHONE:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.NUMBER:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.YESNO:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.FILE:
+      case BOT_CONTROL_TYPES.RATING:
+      case BOT_CONTROL_TYPES.BUTTON:
+      case BOT_CONTROL_TYPES.ADDRESS:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
+      case BOT_CONTROL_TYPES.SCALE:
+      case BOT_CONTROL_TYPES.LIST:
+          return (<div className="handle heading" dangerouslySetInnerHTML={{__html: element.heading}}></div>);
+    }
   }
 
   /**
@@ -322,7 +353,8 @@ export class BotBuilder extends Component {
               <span style={backgroundColor}></span>
                 {data[item].name}
             </div>
-            <div className="handle heading" dangerouslySetInnerHTML={{__html: data[item].heading}}></div>
+            { this.getHeadings(data[item]) }
+            {/* <div className="handle heading" dangerouslySetInnerHTML={{__html: data[item].heading}}></div> */}
             {/* <div className="handle heading">{data[item].heading}</div> */}
             { data[item].options &&
               data[item].options.map((option, optionIndex)=>(
@@ -342,6 +374,9 @@ export class BotBuilder extends Component {
 
   
   render() {
+    if(this.connectors) {
+      this.removeLines(this.connectors);
+    }
     return(
       <div onMouseMove={this.handleMouseMove} onMouseUp={this.handlerConnectorMouseUp} className="bot-builder-container" id="bot-builder-container">
         {this.getBotBuilderView(JSON.parse(JSON.stringify(this.props.botData)))}
@@ -350,6 +385,6 @@ export class BotBuilder extends Component {
   }
 }
 
-export default BotBuilder;
+export default connect(null, { setEditData })(BotBuilder);
 
 

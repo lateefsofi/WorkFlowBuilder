@@ -7,13 +7,16 @@
   background: $color2;
   z-index: 4;
   padding: 18px;
+  padding-top: 82px;
   box-sizing: border-box;
   box-shadow: 15px 15px 38px 0 $shadow-color;
   overflow: hidden;
+  top: 0;
   section {
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    overflow-y: scroll;
   }
   .controls-section {
     width: 100%;
@@ -27,9 +30,10 @@
     top:0;
     left:0;
     padding: 0;
+    padding-top: 82px !important;
     &.active{
       width: 100%;
-      padding: 14px;
+      padding: 30px;
     }
     .close {
       float: left;

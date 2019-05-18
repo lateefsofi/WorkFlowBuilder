@@ -1,9 +1,6 @@
 export const modules = {
   toolbar: [
-    ['bold', 'italic', 'underline', 'strike', 'link'],
-    [ 
-     {'indent': '-1'}, {'indent': '+1'}]
-    ['clean']
+    ['bold', 'italic', 'underline', 'strike', 'link']
   ],
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
