@@ -7,7 +7,8 @@ import {
   PhoneFormComponent,
   EmailFormComponent,
   YesNoComponent,
-  AddressFormComponent
+  AddressFormComponent,
+  FileUploadFormComponent
 } from './forms';
 import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 import { setEditData } from '../../../store/bot-builder/actions';
@@ -37,8 +38,9 @@ export class BotControlSettingsComponent extends Component {
       case TYPES.YESNO:
         return (<YesNoComponent element={elementDetails}
           saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
-      case TYPES.FILE:
-        break;
+      case TYPES.FILE: 
+        return (<FileUploadFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.RATING:
         break;
       case TYPES.BUTTON:

@@ -11,7 +11,7 @@ export const controlsData = [
     {value: "Yes", next: null},
     {value: "No", next: null}
     ], saveInVariable: false, assignToLeadQualificationStage: false },
-  { icon: 'file', type: TYPES.FILE, name: 'File', hasOptions: true },
+  { icon: 'file', type: TYPES.FILE, name: 'File', isSaveInVariable: false, isAssignToLeadQualificationStage: false, isFileUploadValidation: false, isCustValidationMsg: false },
   { icon: 'rating', type: TYPES.RATING, name: 'Rating', hasOptions: true },
   { icon: 'button', type: TYPES.BUTTON, name: 'Button', options: [], hasOptions: true },
   { icon: 'address', type: TYPES.ADDRESS, name: 'Address', text: '', placeholder: '', saveInVariable: false },

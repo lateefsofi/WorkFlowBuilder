@@ -307,6 +307,7 @@ export class BotBuilder extends Component {
       case BOT_CONTROL_TYPES.YESNO:
         return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
       case BOT_CONTROL_TYPES.FILE:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
       case BOT_CONTROL_TYPES.RATING:
       case BOT_CONTROL_TYPES.BUTTON:
       case BOT_CONTROL_TYPES.ADDRESS:
