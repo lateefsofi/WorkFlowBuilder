@@ -12,7 +12,7 @@
     line-height: 18px;
   }
   div{
-    display: block;
+    // display: block;
     width: 100%;
     position: relative;
   }
@@ -57,11 +57,30 @@
     outline: none;
   }
   .variable{
-    padding: 4px 12px;
+    display: inline-block;
     position: absolute;
     right: 0;
     top: 8px;
-    border-radius: 8px;
+    width: auto;
+    button{
+      padding: 4px 12px;
+      // position: absolute;
+      // right: 0;
+      // top: 8px;
+      position: relative;
+      border-radius: 8px;
+      border-radius: 0;
+      padding: 5px 16px;
+      background: transparent;
+      border: 0.5px solid $color1;
+      color: $color1;
+      font-size: 12px;
+      z-index: 1;
+      
+    }
+    .btn-primary.dropdown-toggle:focus {
+      box-shadow: none; 
+    }
   }
 }
 
@@ -80,14 +99,23 @@
 }
 
 .check-box-container{
-  margin: 10px 0px 22px 0px;
+  margin: 22px 0px 22px 0px;
+  &>div{
+    margin-bottom: 0;
+  }
   label{
     font-size: 12px;
     font-family: proxima-nova, sans-serif;
     font-weight: 400;
-    margin-top: 15px;
+    margin-top: 0px;
     label:first-child{
       margin-top: 0;
+    }
+    input[type="checkbox"]{
+      display: inline-block;
+      width: auto;
+      height: 14px;
+      outline: none;
     }
   }
 }

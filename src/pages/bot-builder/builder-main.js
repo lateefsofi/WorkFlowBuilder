@@ -57,7 +57,7 @@ export class BuilderMain extends Component {
   deleteElementHandler(elementId) {
     let updatedElements = JSON.parse(JSON.stringify(this.state.builderData)); // { ...this.state.builderData };
     delete updatedElements[elementId];
-    Object.keys(updatedElements).map(key =>{
+    Object.keys(updatedElements).forEach(key =>{
       if(updatedElements[key].next === elementId) {
         updatedElements[key].next = null;
       }

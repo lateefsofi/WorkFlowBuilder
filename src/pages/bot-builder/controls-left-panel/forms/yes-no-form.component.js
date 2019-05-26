@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
+import { cleanUnusedvariables, elementTextChange } from './utils';
 
 import './forms.scss';
 
@@ -14,9 +15,8 @@ export class YesNoComponent extends Component {
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
   }
-  onQuillTextChangehandler(text) {
-    const element = {...this.state.element};
-    element.text= text;
+  onQuillTextChangehandler(text, variable) {
+    const element = elementTextChange({...this.state.element}, text, variable) ;
     this.setState({
       element
     })
@@ -36,7 +36,8 @@ export class YesNoComponent extends Component {
       })
       return;
     }
-    this.props.saveElementPropsHandler(element)
+    element = cleanUnusedvariables(element);
+    this.props.saveElementPropsHandler(element);
   }
   getOptions(options) {
     return (
@@ -60,16 +61,16 @@ export class YesNoComponent extends Component {
           { this.getOptions(this.state.element.options) }
         </ul>
         <div className="check-box-container">
-        <FormGroup check inline>
-          <Label check>
-            <Input type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
-          </Label>
-        </FormGroup>
-        <FormGroup check inline>
-          <Label check>
-            <Input type="checkbox" checked={this.state.element.assignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('assignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
-          </Label>
-        </FormGroup>
+        <Form.Group check="true" inline="true">
+          <Form.Label check="true">
+            <Form.Control type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
+          </Form.Label>
+        </Form.Group>
+        <Form.Group check="true" inline="true">
+          <Form.Label check="true">
+            <Form.Control type="checkbox" checked={this.state.element.assignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('assignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
+          </Form.Label>
+        </Form.Group>
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>

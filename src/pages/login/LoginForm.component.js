@@ -7,7 +7,7 @@
  **/
 
 import React from 'react';
-import { Form, FormGroup, Button, Label, Input } from 'reactstrap';
+import { Form, Button } from 'react-bootstrap';
 
 import { ErrorMessage } from '../../shared/components/errorMessage/ErrorMessage.component';
 
@@ -25,10 +25,10 @@ const LoginForm = (props) => {
                   Sign in to your account
               </h3>
               <div>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input type="email" name="email" id="email" placeholder="herobot@gmail.com" />
-                </FormGroup>
+                <Form.Group>
+                    <Form.Label for="email">Email</Form.Label>
+                    <Form.Control type="email" name="email" id="email" placeholder="herobot@gmail.com" />
+                </Form.Group>
                 {/* <Form.Group controlId="exampleForm.ControlInput1">
                     <Form.Label>User Name</Form.Label>
                     <Form.Control type="email" placeholder="name@example.com" />
@@ -46,10 +46,10 @@ const LoginForm = (props) => {
                   }
               </div>
               <div>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input type="password" name="password" id="password" />
-                </FormGroup>
+                <Form.Group>
+                    <Form.Label for="password">Password</Form.Label>
+                    <Form.Control type="password" name="password" id="password" />
+                </Form.Group>
                   {
                       errorCheck('password')
                   }

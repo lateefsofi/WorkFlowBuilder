@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
+import { cleanUnusedvariables, elementTextChange } from './utils';
 
 import './forms.scss';
 
@@ -14,9 +15,8 @@ export class AddressFormComponent extends Component {
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
   }
-  onQuillTextChangehandler(text) {
-    const element = {...this.state.element};
-    element.text= text;
+  onQuillTextChangehandler(text, variable) {
+    const element = elementTextChange({...this.state.element}, text, variable) ;
     this.setState({
       element
     })
@@ -36,7 +36,9 @@ export class AddressFormComponent extends Component {
       })
       return;
     }
+    element = cleanUnusedvariables(element);
     this.props.saveElementPropsHandler(element)
+    console.log("Address element: ", element)
   }
   
   render() {
@@ -50,11 +52,11 @@ export class AddressFormComponent extends Component {
           onQuillTextChangehandler={this.onQuillTextChangehandler}/>
           { this.state.isFormDirty && (!this.state.element.text || this.state.element.text===window.quillDefaultText) &&  <p className="help-text">Please enter your question.</p>}
         <div className="check-box-container">
-        <FormGroup check inline>
-          <Label check>
-            <Input type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
-          </Label>
-        </FormGroup>
+        <Form.Group check="true" inline="true">
+          <Form.Label check="true">
+            <Form.Control type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
+          </Form.Label>
+        </Form.Group>
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>

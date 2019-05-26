@@ -3,7 +3,7 @@ import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 export const controlsData = [
   { icon: 'message', type: TYPES.MESSAGE, name: 'Message', messages: [{text: ""}], hasOptions: false, placeholder: 'Type your message here' },
   { icon: 'profile', type: TYPES.NAME, name: 'Name', text:'', hasOptions: false, placeholder: '', saveInVariable: false },
-  { icon: 'email', type: TYPES.EMAIL, name: 'Email', text: '', placeholder: '', saveInVariable: false },
+  { icon: 'email', type: TYPES.EMAIL, name: 'Email', text: '', placeholder: '', saveInVariable: false, disableNonBusinessEmails: false, custValidationMsg: false, validationMessage: '' },
   { icon: 'phone', type: TYPES.PHONE, name: 'Phone', text: '', placeholder: '', saveInVariable: false, enableCountryCode: false, custValidationMsg: false },
   { icon: 'number', type: TYPES.NUMBER, name: 'Number', text: '', placeholder: '', saveInVariable: false, setMinMaxNum: false, custValidationMsg: false },
   { icon: 'yesno', type: TYPES.YESNO, name: 'Yes/No', hasOptions: true, text: '',

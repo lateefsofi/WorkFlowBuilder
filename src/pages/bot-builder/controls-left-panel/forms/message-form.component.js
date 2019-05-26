@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'reactstrap';
+import Button from 'react-bootstrap/Button';
 import { QuilEditor } from './quiil-editor.component';
-import { ReactForm, UpdateField, SetDirty, SetFormDirtyState, ReactFormValues } from '../../../../shared/services/ReactForm.service';
+import { cleanUnusedvariables } from './utils';
 
 import './forms.scss';
 
@@ -17,9 +17,16 @@ export class MessageFormComponent extends Component {
     this.removeOption = this.removeOption.bind(this);
     this.onFormSubmitHandler = this.onFormSubmitHandler.bind(this);
   }
-  onQuillTextChangehandler(text, field, index) {
+  onQuillTextChangehandler(text, variable, field, index) {
     const element = {...this.state.element};
     element[field][index].text= text;
+    if(variable) {
+      if(!element[field][index].variables) {
+        element[field][index].variables = [variable];
+      } else {
+        element[field][index].variables.push(variable);
+      }
+    }
     this.setState({
       element: { ...element }
     })
@@ -37,6 +44,9 @@ export class MessageFormComponent extends Component {
         isFormDirty: true
       })
     } else {
+      element.messages.forEach(message => {
+        message = cleanUnusedvariables(message);
+      })
       this.props.saveElementPropsHandler(element)
     }
   }
@@ -57,7 +67,6 @@ export class MessageFormComponent extends Component {
   }
   
   render() {
-    debugger
     const getMessageNodes = messages => (messages.map((message, index )=> 
       <React.Fragment key={index}>
         <QuilEditor
@@ -73,7 +82,7 @@ export class MessageFormComponent extends Component {
       </React.Fragment>
     ));
     return(
-      <Form className="element-form" onSubmit={e=>this.onFormSubmitHandler(e,this.state.element)}  noValidate>
+      <form className="element-form" onSubmit={e=>this.onFormSubmitHandler(e,this.state.element)}  noValidate>
         <div className="header-title">Add new message</div>
         { getMessageNodes(this.state.element.messages) }
         {/* <div className="header">
@@ -92,7 +101,7 @@ export class MessageFormComponent extends Component {
           <Button type="submit" color="primary">Apply</Button>
         </div>
         
-      </Form>
+      </form>
     );
   }
 }

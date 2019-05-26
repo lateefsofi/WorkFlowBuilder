@@ -25,8 +25,8 @@ export class BotControlSettingsComponent extends Component {
       case TYPES.NAME:
         return (<NameFormComponent element={elementDetails}
           saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
-      case TYPES.EMAIL: EmailFormComponent
-        return (<NameFormComponent element={elementDetails}
+      case TYPES.EMAIL:
+        return (<EmailFormComponent element={elementDetails}
           saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.PHONE:
         return (<PhoneFormComponent element={elementDetails}

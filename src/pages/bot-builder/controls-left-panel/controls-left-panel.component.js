@@ -33,7 +33,7 @@ export class ControlsLeftPanel extends Component {
         ...element,
         id: objectId(),
         heading: "",
-        placeHolder: element.placeHolder || '',
+        placeholder: element.placeholder || '',
         pos: {  
           x: window.scrollX + window.innerWidth/2,
           y: window.scrollY + window.innerHeight/2 - 150
