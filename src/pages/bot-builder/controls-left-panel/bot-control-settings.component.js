@@ -8,7 +8,9 @@ import {
   EmailFormComponent,
   YesNoComponent,
   AddressFormComponent,
-  FileUploadFormComponent
+  FileUploadFormComponent,
+  ScaleFormComponent,
+  ListFormComponent
 } from './forms';
 import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 import { setEditData } from '../../../store/bot-builder/actions';
@@ -49,9 +51,11 @@ export class BotControlSettingsComponent extends Component {
         return (<AddressFormComponent element={elementDetails}
          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.SCALE:
-        break;
+        return (<ScaleFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       case TYPES.LIST:
-        break;
+        return (<ListFormComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)
       default:
         return(<MessageFormComponent element={elementDetails}
           saveElementPropsHandler={this.props.elementDetailsSaveHandler}/>)

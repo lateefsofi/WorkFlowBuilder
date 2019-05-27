@@ -6,6 +6,8 @@ import { EmailFormComponent } from './email-form.component';
 import { YesNoComponent } from './yes-no-form.component';
 import { AddressFormComponent } from './address-form.component';
 import { FileUploadFormComponent } from "./file-upload-form.component";
+import { ScaleFormComponent } from './scale-form.component'
+import { ListFormComponent } from './list-form.component';
 
 export { 
   MessageFormComponent,
@@ -15,5 +17,7 @@ export {
   EmailFormComponent,
   YesNoComponent,
   AddressFormComponent,
-  FileUploadFormComponent
+  FileUploadFormComponent,
+  ScaleFormComponent,
+  ListFormComponent
 };

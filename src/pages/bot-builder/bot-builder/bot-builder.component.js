@@ -313,8 +313,9 @@ export class BotBuilder extends Component {
       case BOT_CONTROL_TYPES.ADDRESS:
         return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
       case BOT_CONTROL_TYPES.SCALE:
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
       case BOT_CONTROL_TYPES.LIST:
-          return (<div className="handle heading" dangerouslySetInnerHTML={{__html: element.heading}}></div>);
+        return <div className="handle heading" dangerouslySetInnerHTML={{__html: element.text}}></div>
     }
   }
 

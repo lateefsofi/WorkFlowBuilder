@@ -118,6 +118,17 @@
       outline: none;
     }
   }
+  .inline-drop-down {
+    select {
+      display: inline-block;
+      width: auto;
+      width: 42px;
+      font-size: 14px;
+      height: 22px;
+      margin-left: 14px;
+      color: $icon-color1;
+    }
+  }
 }
 
 .controls-left-panel .option-container{
