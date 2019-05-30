@@ -16,7 +16,7 @@ export const controlsData = [
   { icon: 'button', type: TYPES.BUTTON, name: 'Button', options: [], hasOptions: true },
   { icon: 'address', type: TYPES.ADDRESS, name: 'Address', text: '', placeholder: '', saveInVariable: false },
   { icon: 'scale', type: TYPES.SCALE, name: 'Scale', placeholder: '', text: '', isSaveInVariable: false, isEenableLabels: false },
-  { icon: 'list', type: TYPES.LIST, name: 'List', text: '', isEenableSearch: false, isEnableMultiSelect: false, isSaveInVariable: false}
+  { icon: 'list', type: TYPES.LIST, name: 'List', text: '', listItems: [], isEenableSearch: false, isEnableMultiSelect: false, isSaveInVariable: false}
 ];
 
 export const additionalBlocksData = [

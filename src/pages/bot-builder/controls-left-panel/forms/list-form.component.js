@@ -12,8 +12,10 @@ export class ListFormComponent extends Component {
     this.state= {
       isFormDirty: false,
       element: this.props.element,
+      listItems: (this.props.element.listItems || []).join('\n')
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
+    this.onTextChange = this.onTextChange.bind(this);
   }
   onQuillTextChangehandler(text, variable) {
     const element = elementTextChange({...this.state.element}, text, variable) ;
@@ -21,6 +23,16 @@ export class ListFormComponent extends Component {
       element
     })
   }
+
+  onTextChange(e) {
+    const element = { ...this.state.element };
+    element.listItems = e.target.value.split("\n");
+    this.setState({
+      element,
+      listItems: e.target.value
+    })
+  }
+
   onCheckBoxChange(field, e) {
     const element = {...this.state.element};
     element[field]= e.target.checked;
@@ -57,7 +69,7 @@ export class ListFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group>
           <Form.Label>Add/Paste your list items here</Form.Label>
-          <Form.Control as="textarea" rows="3" />
+          <Form.Control as="textarea" rows="3" value={this.state.listItems} onChange={this.onTextChange}/>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
