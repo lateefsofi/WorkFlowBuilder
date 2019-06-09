@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Registration from '../pages/registration/Registration.component';
 import Login from '../pages/login/Login.component';
 import BuilderMain from '../pages/bot-builder/builder-main';
+import BotList from '../pages/bot-details/bot-list.component';
 
 class AppRouting extends Component {
     authenticatedRoutes() {
@@ -22,6 +23,7 @@ class AppRouting extends Component {
           <Route exact path="/" component={Login} />
           <Route path="/registration" component={Registration} />
           <Route path="/bot-builder" component={BuilderMain} />
+          <Route path="/bots" component={BotList} />
         </div>
       );
     }

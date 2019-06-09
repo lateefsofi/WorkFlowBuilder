@@ -9,10 +9,11 @@ import * as actions from '../../store/bot-builder/actions';
 import { isEmpty, objectId } from '../../shared/utils/utils';
 import './builder-main.scss';
 
-const MAX_WAIT_TO_SAVE_DATA = 3; // max wait checks to save data
-const DELAY_TO_SAVE_CHANGE = 5000; // 5 seconds
+const DELAY_TO_SAVE_CHANGE = 5000; // 5 seconds, Time to wait after the change
 let dataSaveTimoutSubscription = null;
-let maxWaitToSaveData = MAX_WAIT_TO_SAVE_DATA;
+let isBotIdInQueryParams = false;
+let firstRequestTime= null;
+const MAX_WAIT_TIME = 10000; // 10 seconds, Max time to wait after contineous changes
 
 export class BuilderMain extends Component {
   constructor (props){
@@ -27,7 +28,19 @@ export class BuilderMain extends Component {
   componentDidMount() {
     const botId = new URLSearchParams(this.props.location.search).get('botId');
     if(botId) {
-      //Get bot Data
+      this.props.getBotData(botId);
+      isBotIdInQueryParams = true;
+    }
+    
+  }
+
+  addBotIdToQueryParams() {
+    if(!isBotIdInQueryParams && this.props.builderData && this.props.builderData.id) {
+      isBotIdInQueryParams = true;
+      this.props.history.push({
+        pathname: '/bot-builder',
+        search: "?" + new URLSearchParams({botId: this.props.builderData.id}).toString()
+      })
     }
   }
 
@@ -36,6 +49,7 @@ export class BuilderMain extends Component {
       name: e.target.value
     })
   }
+
   copyElementHandler(elementId) {
     const newObjectId = objectId();
     const newElement = JSON.parse(JSON.stringify(this.props.builderData.data[elementId]));
@@ -56,6 +70,7 @@ export class BuilderMain extends Component {
       }
     })
   }
+
   deleteElementHandler(elementId) {
     let updatedElements = JSON.parse(JSON.stringify(this.props.builderData.data));
     delete updatedElements[elementId];
@@ -85,18 +100,24 @@ export class BuilderMain extends Component {
 
   updateChanges(newBotChanges) {
     this.props.updateBotData(newBotChanges);
-    this.saveBotChanges(newBotChanges);
+    this.saveBotChanges();
   }
 
 
-  saveBotChanges(data) {
-    const timeToWait = maxWaitToSaveData === 0? 0: DELAY_TO_SAVE_CHANGE;
+  saveBotChanges() {
+    if(!firstRequestTime) {
+      firstRequestTime = new Date();
+    }
+    const currRequestTime = new Date();
+    const timeToWait = (currRequestTime - firstRequestTime) > MAX_WAIT_TIME? 0: DELAY_TO_SAVE_CHANGE;
     clearTimeout(dataSaveTimoutSubscription);
     dataSaveTimoutSubscription = setTimeout(() => {
-      maxWaitToSaveData = MAX_WAIT_TO_SAVE_DATA;
-      this.props.saveBotElements(data);
+      firstRequestTime = null;
+      this.props.saveBotElements()
+      .then(()=>{
+        this.addBotIdToQueryParams();
+      });
     }, timeToWait)
-    maxWaitToSaveData--;
   }
 
   handleAddUpdateBotElement(newBotElement) {

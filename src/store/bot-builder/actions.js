@@ -17,7 +17,7 @@ export const updateBotData = data => ({
  * Save bot elements configuration
  * @param {*} data 
  */
-export const saveBotElements = data => {
+export const saveBotElements = () => {
   return function(dispatch, getState) {
     const data = getState().BotBuilderReducer.builderData;
     if(isEmpty(data.data)) {
@@ -26,7 +26,7 @@ export const saveBotElements = data => {
     dispatch({
       type: actionTypes.SAVE_BOT_ELEMENTS_REQUEST
     })
-    apiCall(
+    return apiCall(
       'PUT',
       endPoints.BOT_BUILDER,
       data,
@@ -48,6 +48,30 @@ export const saveBotElements = data => {
   } 
 } 
 
+
+export const getBotData = botId => {
+  return function(dispatch){
+    const uri = `${endPoints.BOT_BUILDER}/${botId}`;
+    apiCall('GET', uri, null, { authenticate: true })
+      .then( response => {
+        console.log("GET BOT DATA RESPONSE: ", response);
+        if(response && response.data) {
+          const botData = {
+            id: response.data.id,
+            data: response.data.data,
+            name: response.data.name
+          }
+          dispatch({
+            type: actionTypes.UPDATE_BOT_DATA,
+            payload: botData
+          })
+        }
+      })
+      .catch( err => {
+
+      })
+  }
+}
 
 // export const BotBuilderActions = {
 //   EDIT_BOT_ELEMENT: actionTypes.EDIT_BOT_ELEMENT
