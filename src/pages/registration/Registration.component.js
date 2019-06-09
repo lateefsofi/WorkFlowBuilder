@@ -14,8 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { RegForm } from './RegistrationForm.component';
 import { Validations } from './ValidationRules';
-import { Validator } from '../../shared/services/Validator.service';
-import { ReactForm, UpdateField, SetDirty, SetFormDirtyState, ReactFormValues } from '../../shared/services/ReactForm.service';
+import { Validator } from '../../shared/services/validator.service';
+import { ReactForm, UpdateField, SetDirty, SetFormDirtyState, ReactFormValues } from '../../shared/services/reactForm.service';
 import apiCall from '../../shared/services/web-api.service';
 import { endPoints } from '../../shared/constants';
 import {  showLoader, hideLoader } from '../../store/loader/actionCreator';

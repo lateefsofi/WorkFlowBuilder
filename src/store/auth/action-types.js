@@ -1,2 +1,4 @@
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const USER_LOGGED_IN_ERR = 'USER_LOGGED_IN_ERR';

@@ -3,14 +3,11 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import ValidationRules from '../registration/ValidationRules';
-import { Validator } from '../../shared/services/Validator.service';
-import { ReactForm, UpdateField, SetDirty, SetFormDirtyState, ReactFormValues } from '../../shared/services/ReactForm.service';
+import { Validator } from '../../shared/services/validator.service';
+import { ReactForm, UpdateField, SetDirty, SetFormDirtyState, ReactFormValues } from '../../shared/services/reactForm.service';
 
-import apiCall from '../../shared/services/web-api.service';
-import { endPoints } from '../../shared/constants';
 import {  showLoader, hideLoader } from '../../store/loader/actionCreator';
-import { userLoggedIn } from '../../store/auth/actionCreator';
-import { addToLocalStorage } from '../../shared/services/Storage.service';
+import { login } from '../../store/auth/actions';
 import './Login.component.scss';
 import LoginForm from './LoginForm.component';
 
@@ -62,30 +59,43 @@ class Login extends Component {
           }
           const data = ReactFormValues(loginForm);
           this.LoginApiCall(data);
+        
       });
   }
 
   LoginApiCall = (data) => {
     this.props.showLoader('Validating your credentials.')
-    apiCall('POST', endPoints.LOGIN, data)
-      .then((response)=>{
-          this.props.hideLoader();
-          if(response.status === 200) {
-              addToLocalStorage('loginData', {...response.data})
-              this.setState({
-                form: ReactForm(this.loginForm)
-              });
-              toast.success('You are logged in successfully.');
-              this.props.updateLoginStatus({...response.data});
-          }
-      })
-      .catch(err => {
-          this.props.hideLoader();
-          if(err && err.response && err.response.data && err.response.data.message) {
+    this.props.login(data)
+        .then(
+            response => {
+                toast.success('You are logged in successfully.');
+                this.props.hideLoader();
+            })
+        .catch(err => {
+            this.props.hideLoader();
+            if(err && err.response && err.response.data && err.response.data.message) {
               toast.error(err.response.data.message.join(','), 'Error');
-          }
+            }
+        });
+    // apiCall('POST', endPoints.LOGIN, data)
+    //   .then((response)=>{
+    //       this.props.hideLoader();
+    //       if(response.status === 200) {
+    //           addToLocalStorage('loginData', {...response.data})
+    //           this.setState({
+    //             form: ReactForm(this.loginForm)
+    //           });
+    //           toast.success('You are logged in successfully.');
+    //           this.props.updateLoginStatus({...response.data});
+    //       }
+    //   })
+    //   .catch(err => {
+    //       this.props.hideLoader();
+    //       if(err && err.response && err.response.data && err.response.data.message) {
+    //           toast.error(err.response.data.message.join(','), 'Error');
+    //       }
 
-      });
+    //   });
   }
 
   render() {
@@ -109,12 +119,18 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        showLoader: (payload) => dispatch(showLoader(payload)),
-        hideLoader: () => dispatch(hideLoader()),
-        updateLoginStatus: (payload) => dispatch(userLoggedIn(payload))
-    }
-};
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         showLoader: (payload) => dispatch(showLoader(payload)),
+//         hideLoader: () => dispatch(hideLoader()),
+//         updateLoginStatus: (payload) => dispatch(userLoggedIn(payload))
+//     }
+// };
+const mapDispatchToProps = {
+    login,
+    showLoader,
+    hideLoader
+    // updateLoginStatus: userLoggedIn
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

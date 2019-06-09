@@ -3,7 +3,7 @@
  * Description: Creates input controls for the Login form
  * Author:    Lateef Sofi
  * Created:   17/11/2018
- * Last Modified: 17/11/2018
+ * Last Modified: 08/06/2018
  **/
 
 import React from 'react';
@@ -26,32 +26,30 @@ const LoginForm = (props) => {
               </h3>
               <div>
                 <Form.Group>
-                    <Form.Label for="email">Email</Form.Label>
-                    <Form.Control type="email" name="email" id="email" placeholder="herobot@gmail.com" />
+                    <Form.Label >Email</Form.Label>
+                    <Form.Control 
+                        type="email" 
+                        name="email" 
+                        id="email"
+                        onChange={props.handleChange('email')}
+                        onBlur={props.handleBlurEvent('email')}/>
                 </Form.Group>
-                {/* <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control type="email" placeholder="name@example.com" />
-                </Form.Group> */}
-                  {/* <TextField
-                  id="email"
-                  label="User Name"
-                  value={props.email.value}
-                  onChange={props.handleChange('email')}
-                  onBlur={props.handleBlurEvent('email')}
-                  margin="normal"
-                  /> */}
                   {
-                      errorCheck('email')
+                    errorCheck('email')
                   }
               </div>
               <div>
                 <Form.Group>
-                    <Form.Label for="password">Password</Form.Label>
-                    <Form.Control type="password" name="password" id="password" />
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control 
+                        type="password" 
+                        name="password" 
+                        id="password"
+                        onChange={props.handleChange('password')}
+                        onBlur={props.handleBlurEvent('password')} />
                 </Form.Group>
                   {
-                      errorCheck('password')
+                    errorCheck('password')
                   }
               </div>
               <div className="actions">

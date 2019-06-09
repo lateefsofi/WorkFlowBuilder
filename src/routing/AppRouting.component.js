@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Registration from '../pages/registration/Registration.component';
 import Login from '../pages/login/Login.component';
-import { BuilderMain } from '../pages/bot-builder/builder-main';
+import BuilderMain from '../pages/bot-builder/builder-main';
 
 class AppRouting extends Component {
     authenticatedRoutes() {

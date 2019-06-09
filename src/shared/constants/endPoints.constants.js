@@ -1,8 +1,10 @@
-const endPoints = {
+export const endPoints = {
     LOGIN: '/auth',
-    REGISTER: '/user',
-    COUNTRIES: 'config/countries'
+    LOG_OUT: '/auth/logout',
+    REGISTER: '/account',
+    USER: '/user',
+    BOT_BUILDER: '/bot-builder',
+    CHAT_MESSAGE: '/message'
 }
 
 export default endPoints;
-export { endPoints };

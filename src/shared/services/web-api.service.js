@@ -1,23 +1,22 @@
 import axios from 'axios';
 import config from '../../config';
 import responseTypes from '../constants/settings.constants';
-import { getFromLocalStorage } from './Storage.service';
+import { getFromLocalStorage } from './storage.service';
 
 import links from '../constants/links.constants';
 
 const getAuthToken = () => {
     let token= '';
     const loginData= getFromLocalStorage('loginData');
-    if(loginData && loginData.access_token)
-        token= 'Bearer ' + loginData.access_token;
+    if(loginData && loginData.accessToken)
+        token= 'Bearer ' + loginData.accessToken;
     else{
-        // this.props.history.push(links.LOGIN);
         window.location.pathname= links.LOGIN;
     }
     return token;
 }
 
-const apiCall = (method, uri, requestData, options ={}) => {
+export const apiCall = (method, uri, requestData, options ={}) => {
     let requestObject = {
         method: method,
         baseURL: config.url,
@@ -27,22 +26,19 @@ const apiCall = (method, uri, requestData, options ={}) => {
         responseType: options.responseType || responseTypes.JSON,
     }
     if(options.authenticate) {
-        requestObject.header= getAuthToken();
+        requestObject.headers= {
+            Authorization: getAuthToken()
+        }
     }
     return new Promise((resolve, reject)=>{
         axios(requestObject)
             .then((response)=>{
-                debugger
                 resolve(response);
             })
             .catch((err)=>{
-                debugger
                 reject(err);
             });
     });
 }
 
-export default apiCall
-export {
-    apiCall
-}
+export default apiCall;
