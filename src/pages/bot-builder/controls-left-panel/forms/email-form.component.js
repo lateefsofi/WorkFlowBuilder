@@ -53,17 +53,17 @@ export class EmailFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
+            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
           </Form.Label>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.disableNonBusinessEmails} onChange={e=>this.onCheckBoxChange('disableNonBusinessEmails', e)} /> Disable Non-Business Emails
+            <Form.Control type="checkbox" checked={this.state.element.isDisableNonBusinessEmails} onChange={e=>this.onCheckBoxChange('isDisableNonBusinessEmails', e)} /> Disable Non-Business Emails
           </Form.Label>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.custValidationMsg} onChange={e=>this.onCheckBoxChange('custValidationMsg', e)} /> Customise validation Messages
+            <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation Messages
           </Form.Label>
         </Form.Group>
         </div>

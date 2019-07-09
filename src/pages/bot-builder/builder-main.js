@@ -101,6 +101,7 @@ export class BuilderMain extends Component {
   updateChanges(newBotChanges) {
     this.props.updateBotData(newBotChanges);
     this.saveBotChanges();
+    console.log('this.props.builderData: ', this.props.builderData);
   }
 
 
@@ -146,6 +147,10 @@ export class BuilderMain extends Component {
         </div>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this.props.resetBotBuilder();
   }
 }
 

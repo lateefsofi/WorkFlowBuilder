@@ -13,6 +13,15 @@ export const updateBotData = data => ({
   payload: data
 })
 
+export const resetBotBuilder = () => ({
+  type: actionTypes.UPDATE_BOT_DATA,
+  payload: {
+    name: 'Untitled Bot',
+    data: {},
+    id: null
+  }
+})
+
 /**
  * Save bot elements configuration
  * @param {*} data 

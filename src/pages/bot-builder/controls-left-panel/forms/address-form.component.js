@@ -54,7 +54,7 @@ export class AddressFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
+            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
           </Form.Label>
         </Form.Group>
         </div>

@@ -26,7 +26,7 @@ export class BotList extends Component {
         <td>{index+1}</td>
         <td onClick={()=>this.handleBotClick(item.id)}>{item.name}</td>
         <td>{item.ModifiedAt}</td>
-        <td>{item.ModifiedBy}</td>
+        <td>{item.modifiedByName}</td>
         <td>
           <Button onClick={()=>this.handleDelete(item.id)}>
             DELETE

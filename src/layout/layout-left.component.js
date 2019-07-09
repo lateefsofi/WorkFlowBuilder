@@ -10,7 +10,7 @@ export const LayoutLeft = ()=>
     </ul>
     <ul className="left-nav-mid">
       <li>
-        <Link to="/bot-builder"> <i className="cloud-message-icon"></i> </Link>
+        <Link to="/bots"> <i className="cloud-message-icon"></i> </Link>
       </li>
       <li>
         <Link to="/bot-builder"> <i className="stats-icon"></i> </Link>

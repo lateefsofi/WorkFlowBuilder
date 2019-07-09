@@ -68,7 +68,7 @@ export class ScaleFormComponent extends Component {
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isEenableLabels} onChange={e=>this.onCheckBoxChange('isEenableLabels', e)} /> Enable Labels
+            <Form.Control type="checkbox" checked={this.state.element.isEnableLabels} onChange={e=>this.onCheckBoxChange('isEnableLabels', e)} /> Enable Labels
           </Form.Label>
         </Form.Group>
         </div>

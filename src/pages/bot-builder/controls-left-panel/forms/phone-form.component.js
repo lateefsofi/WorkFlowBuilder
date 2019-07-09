@@ -54,17 +54,17 @@ export class PhoneFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.saveInVariable} onChange={e=>this.onCheckBoxChange('saveInVariable', e)} /> Save Answer to a Variable
+            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
           </Form.Label>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.enableCountryCode} onChange={e=>this.onCheckBoxChange('enableCountryCode', e)} /> Enable country code field
+            <Form.Control type="checkbox" checked={this.state.element.isEnableCountryCode} onChange={e=>this.onCheckBoxChange('isEnableCountryCode', e)} /> Enable country code field
           </Form.Label>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.custValidationMsg} onChange={e=>this.onCheckBoxChange('custValidationMsg', e)} /> Customise validation message
+            <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation message
           </Form.Label>
         </Form.Group>
         </div>

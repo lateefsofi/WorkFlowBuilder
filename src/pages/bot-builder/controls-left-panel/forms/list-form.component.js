@@ -12,7 +12,7 @@ export class ListFormComponent extends Component {
     this.state= {
       isFormDirty: false,
       element: this.props.element,
-      listItems: (this.props.element.listItems || []).join('\n')
+      options: (this.props.element.options || []).join('\n')
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
@@ -26,10 +26,10 @@ export class ListFormComponent extends Component {
 
   onTextChange(e) {
     const element = { ...this.state.element };
-    element.listItems = e.target.value.split("\n");
+    element.options = e.target.value.split("\n"); 
     this.setState({
       element,
-      listItems: e.target.value
+      options: e.target.value
     })
   }
 
@@ -69,11 +69,11 @@ export class ListFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group>
           <Form.Label>Add/Paste your list items here</Form.Label>
-          <Form.Control as="textarea" rows="3" value={this.state.listItems} onChange={this.onTextChange}/>
+          <Form.Control as="textarea" rows="3" value={this.state.options} onChange={this.onTextChange}/>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isEenableSearch} onChange={e=>this.onCheckBoxChange('isEenableSearch', e)} /> Enable Search
+            <Form.Control type="checkbox" checked={this.state.element.isEnableSearch} onChange={e=>this.onCheckBoxChange('isEnableSearch', e)} /> Enable Search
           </Form.Label>
         </Form.Group>
         <Form.Group check="true" inline="true">
