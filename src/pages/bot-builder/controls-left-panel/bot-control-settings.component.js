@@ -10,7 +10,8 @@ import {
   AddressFormComponent,
   FileUploadFormComponent,
   ScaleFormComponent,
-  ListFormComponent
+  ListFormComponent,
+  ButtonComponent
 } from './forms';
 import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 import { setEditData } from '../../../store/bot-builder/actions';
@@ -46,6 +47,8 @@ export class BotControlSettingsComponent extends Component {
       case TYPES.RATING:
         break;
       case TYPES.BUTTON:
+        return (<ButtonComponent element={elementDetails}
+          saveElementPropsHandler={this.props.elementDetailsSaveHandler} />)
         break;
       case TYPES.ADDRESS: 
         return (<AddressFormComponent element={elementDetails}

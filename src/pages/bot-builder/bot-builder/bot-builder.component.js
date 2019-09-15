@@ -347,8 +347,10 @@ export class BotBuilder extends Component {
             className="element-container"
             onMouseOver={e=>this.handlerMouseOverOnElement(e, item)}>
             <div className="actions">
-              <i className="copy-icon" onClick={()=>this.props.copyElementHandler(item)}></i>
-              <i className="delete-icon" onClick={()=> this.deleteElementHandler(item)}></i>
+              <div>
+                <i className="copy-icon" title="Copy" onClick={()=>this.props.copyElementHandler(item)}></i>
+                <i className="delete-icon" title="delete" onClick={()=> this.deleteElementHandler(item)}></i>
+              </div>
             </div>
             <div className="drag-area handle" onMouseDown={this.elementMouseDownHandler} onMouseMove={this.elementMouseMoveHandler} onMouseUp={()=>this.elementMouseUpHandler(data[item])}></div>
             <div className="controlType">

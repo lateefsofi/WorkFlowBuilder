@@ -8,6 +8,7 @@ import { AddressFormComponent } from './address-form.component';
 import { FileUploadFormComponent } from "./file-upload-form.component";
 import { ScaleFormComponent } from './scale-form.component'
 import { ListFormComponent } from './list-form.component';
+import { ButtonComponent } from './button-form-component';
 
 export { 
   MessageFormComponent,
@@ -19,5 +20,6 @@ export {
   AddressFormComponent,
   FileUploadFormComponent,
   ScaleFormComponent,
-  ListFormComponent
+  ListFormComponent,
+  ButtonComponent
 };

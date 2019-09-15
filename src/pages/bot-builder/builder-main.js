@@ -149,8 +149,14 @@ export class BuilderMain extends Component {
     );
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
+    clearTimeout(dataSaveTimoutSubscription);
     this.props.resetBotBuilder();
+    //Save all changes
+    const response= await this.props.saveBotElements()
+      // .then(response=> {
+        console.log("Data saved: ", response)
+      // });
   }
 }
 

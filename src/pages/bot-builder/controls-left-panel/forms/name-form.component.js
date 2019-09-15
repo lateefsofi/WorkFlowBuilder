@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, InputGroup } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables } from './utils';
@@ -14,6 +14,7 @@ export class NameFormComponent extends Component {
         element: this.props.element,
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
+    this.onToggleFallBackValue = this.onToggleFallBackValue.bind(this);
   }
   onQuillTextChangehandler(text, variable) {
     const element = {...this.state.element};
@@ -47,6 +48,13 @@ export class NameFormComponent extends Component {
     element = cleanUnusedvariables(element);
     this.props.saveElementPropsHandler(element)
   }
+  onToggleFallBackValue() {
+    const element = {...this.state.element};
+    element.isAddFallBackValue = !element.isAddFallBackValue;
+    this.setState({
+      element
+    });
+  }
   
   render() {
     return(
@@ -63,6 +71,19 @@ export class NameFormComponent extends Component {
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
           </Form.Label>
+          {
+            this.state.element.isSaveInVariable &&
+            <div className="variable-container">
+              <span className="atSymbol">@</span>
+              <Form.Control className="txt-variable-name" type="text" placeholder="Variable Name" />
+              <Button className="create-action" type="button" color="primary">Create</Button>
+              <Button className="add-fallback-val-action" onClick={this.onToggleFallBackValue} type="button" color="primary">Add Fallback value</Button>
+              {
+                this.state.element.isAddFallBackValue &&
+                <Form.Control type="text" placeholder="Fallback Value" />
+              }
+            </div>
+          }
         </Form.Group>
         </div>
         <div className="actions">

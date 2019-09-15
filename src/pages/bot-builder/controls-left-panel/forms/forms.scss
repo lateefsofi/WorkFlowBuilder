@@ -92,6 +92,7 @@
 }
 .ql-container.ql-snow{
   margin-top: 14px;
+  height: auto;
 }
 .ql-editor{
   background: $white;
@@ -130,6 +131,40 @@
       color: $icon-color1;
     }
   }
+  .variable-container {
+    font-size: 15px;
+    ::-webkit-input-placeholder{
+      font-size: 12px;
+    }
+    input{
+      font-size: 15px;
+    }
+    .txt-variable-name{
+      padding-left: 26px;
+    }
+    button{
+      color: #7B7B7B;
+      font-size: 10px;
+      border-color: transparent;
+      background-color: transparent;
+    }
+    .create-action{
+      background-color: #EEEEEE;
+      padding: 2px 6px;
+      border-radius: 4px;
+      position: absolute;
+      right: 10px;
+      top: 8px;
+    }
+    .add-fallback-val-action{
+      padding: 0
+    }
+    .atSymbol{
+      position: absolute;
+      top: 8px;
+      left: 10px;
+    }
+  }
 }
 
 .controls-left-panel .option-container{
@@ -147,6 +182,20 @@
       text-align: center;
       border: 1px solid $icon-color1;
       background: $color4;
+      
+    }
+    .btn-container{
+      width: 100%;
+      input[type="text"]{
+        width: 150px;
+        padding: 6px;
+        text-align: center;
+        border: 1px solid $icon-color1;
+        background: $color4;
+      }
+      button{
+        float: right;
+      }
     }
   }
 }

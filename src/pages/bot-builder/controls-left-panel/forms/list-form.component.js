@@ -12,7 +12,7 @@ export class ListFormComponent extends Component {
     this.state= {
       isFormDirty: false,
       element: this.props.element,
-      options: (this.props.element.options || []).join('\n')
+      list: (this.props.element.list || []).join("\n")
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
@@ -25,11 +25,11 @@ export class ListFormComponent extends Component {
   }
 
   onTextChange(e) {
-    const element = { ...this.state.element };
-    element.options = e.target.value.split("\n"); 
+    // const element = { ...this.state.element };
+    // element.options = e.target.value.split("\n").map(item, index => {value: item, }); 
     this.setState({
-      element,
-      options: e.target.value
+      // element,
+      list: e.target.value
     })
   }
 
@@ -40,6 +40,15 @@ export class ListFormComponent extends Component {
       element
     })
   }
+  getOptions(element) {
+    // const listlen = this.props.element.list.length;
+    element.list = this.state.list.split("\n")
+    // .map((item, index) => {
+    //   return {value: item, next: (listlen>index? this.props.element.list[index].next: null)}
+    // }
+    // ); 
+    return element;
+  }
   onFormSubmitHandler(e, element) {
     e.preventDefault();
     if(!element.text || element.text===window.quillDefaultText) {
@@ -49,13 +58,11 @@ export class ListFormComponent extends Component {
       return;
     }
     element = cleanUnusedvariables(element);
+    element = this.getOptions(element);
     this.props.saveElementPropsHandler(element)
-    console.log("Element: ", element)
+    console.log("Element Options: ", element)
   }
-  scaleSteps(steps) {
-    return steps.map((item, i) => <option key={`scale-step-${i}`} value={item}> { item } </option>)
-  }
-  
+
   render() {
     return(
       <Form className="element-form" onSubmit={e=>this.onFormSubmitHandler(e, this.state.element)}  noValidate>
@@ -69,7 +76,7 @@ export class ListFormComponent extends Component {
         <div className="check-box-container">
         <Form.Group>
           <Form.Label>Add/Paste your list items here</Form.Label>
-          <Form.Control as="textarea" rows="3" value={this.state.options} onChange={this.onTextChange}/>
+          <Form.Control as="textarea" rows="3" value={this.state.list} onChange={this.onTextChange}/>
         </Form.Group>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">

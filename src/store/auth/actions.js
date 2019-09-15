@@ -3,17 +3,17 @@ import apiCall from '../../shared/services/web-api.service';
 import endPoints from '../../shared/constants/endPoints.constants';
 import { addToLocalStorage } from '../../shared/services/storage.service'
 
-export const login = (requestData) => {
-  return function(dispatch) {
-    dispatch({
-      type: actionTypes.LOGIN_REQUEST
-    });
+export const login = (requestData) => 
+  function(dispatch) {
+    // dispatch({
+    //   type: actionTypes.LOGIN_REQUEST
+    // });
     return apiCall(
       'POST',
       endPoints.LOGIN,
       requestData,
       {
-        authenticate: true
+        authenticate: false
       })
       .then(response=>{
         dispatch({
@@ -31,4 +31,3 @@ export const login = (requestData) => {
         return err;
       });
   }
-}
