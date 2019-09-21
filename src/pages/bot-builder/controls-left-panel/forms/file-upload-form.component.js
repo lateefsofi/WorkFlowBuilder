@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
+import SaveAnswerInVariable from './common/save-answer-to-variable';
 
 import './forms.scss';
 
@@ -14,6 +15,7 @@ export class FileUploadFormComponent extends Component {
       element: this.props.element,
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
+    this.onFieldUpdate = this.onFieldUpdate.bind(this);
   }
   onQuillTextChangehandler(text, variable) {
     const element = elementTextChange({...this.state.element}, text, variable) ;
@@ -39,6 +41,14 @@ export class FileUploadFormComponent extends Component {
     element = cleanUnusedvariables(element);
     this.props.saveElementPropsHandler(element)
   }
+
+  onFieldUpdate(field, val) {
+    const element = {...this.state.element};
+    element[field]= val;
+    this.setState({
+      element
+    });
+  }
   
   render() {
     return(
@@ -51,26 +61,25 @@ export class FileUploadFormComponent extends Component {
           onQuillTextChangehandler={this.onQuillTextChangehandler}/>
           { this.state.isFormDirty && (!this.state.element.text || this.state.element.text===window.quillDefaultText) &&  <p className="help-text">Please enter your question.</p>}
         <div className="check-box-container">
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
-          </Form.Label>
-        </Form.Group>
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
-          </Form.Label>
-        </Form.Group>
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isFileUploadValidation} onChange={e=>this.onCheckBoxChange('isFileUploadValidation', e)} /> Set File Upload Validation
-          </Form.Label>
-        </Form.Group>
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation Messages
-          </Form.Label>
-        </Form.Group>
+          <SaveAnswerInVariable 
+            {...this.state.element}
+            onFieldUpdate={this.onFieldUpdate}
+          />
+          <Form.Group check="true" inline="true">
+            <Form.Label check="true">
+              <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
+            </Form.Label>
+          </Form.Group>
+          <Form.Group check="true" inline="true">
+            <Form.Label check="true">
+              <Form.Control type="checkbox" checked={this.state.element.isFileUploadValidation} onChange={e=>this.onCheckBoxChange('isFileUploadValidation', e)} /> Set File Upload Validation
+            </Form.Label>
+          </Form.Group>
+          <Form.Group check="true" inline="true">
+            <Form.Label check="true">
+              <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation Messages
+            </Form.Label>
+          </Form.Group>
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>

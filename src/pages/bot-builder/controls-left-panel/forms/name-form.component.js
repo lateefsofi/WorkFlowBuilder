@@ -3,6 +3,7 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables } from './utils';
+import SaveAnswerInVariable from './common/save-answer-to-variable';
 
 import './forms.scss';
 
@@ -14,8 +15,10 @@ export class NameFormComponent extends Component {
         element: this.props.element,
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
-    this.onToggleFallBackValue = this.onToggleFallBackValue.bind(this);
+    this.onCheckBoxChange = this.onCheckBoxChange.bind(this);
+    this.onFieldUpdate = this.onFieldUpdate.bind(this);
   }
+
   onQuillTextChangehandler(text, variable) {
     const element = {...this.state.element};
     element.text= text;
@@ -30,6 +33,7 @@ export class NameFormComponent extends Component {
       element
     })
   }
+
   onCheckBoxChange(field, e) {
     const element = {...this.state.element};
     element[field]= e.target.checked;
@@ -37,6 +41,7 @@ export class NameFormComponent extends Component {
       element
     })
   }
+
   onFormSubmitHandler(e, element) {
     e.preventDefault();
     if(!element.text || element.text === window.quillDefaultText) {
@@ -48,9 +53,10 @@ export class NameFormComponent extends Component {
     element = cleanUnusedvariables(element);
     this.props.saveElementPropsHandler(element)
   }
-  onToggleFallBackValue() {
+
+  onFieldUpdate(field, val) {
     const element = {...this.state.element};
-    element.isAddFallBackValue = !element.isAddFallBackValue;
+    element[field]= val;
     this.setState({
       element
     });
@@ -66,30 +72,13 @@ export class NameFormComponent extends Component {
           placeholder={this.state.element.placeholder}
           onQuillTextChangehandler={this.onQuillTextChangehandler}/>
           { this.state.isFormDirty && (!this.state.element.text || this.state.element.text===window.quillDefaultText) &&  <p className="help-text">Please enter you question.</p>}
-        <div className="check-box-container">
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
-          </Form.Label>
-          {
-            this.state.element.isSaveInVariable &&
-            <div className="variable-container">
-              <span className="atSymbol">@</span>
-              <Form.Control className="txt-variable-name" type="text" placeholder="Variable Name" />
-              <Button className="create-action" type="button" color="primary">Create</Button>
-              <Button className="add-fallback-val-action" onClick={this.onToggleFallBackValue} type="button" color="primary">Add Fallback value</Button>
-              {
-                this.state.element.isAddFallBackValue &&
-                <Form.Control type="text" placeholder="Fallback Value" />
-              }
-            </div>
-          }
-        </Form.Group>
-        </div>
+        <SaveAnswerInVariable 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>
         </div>
-        
       </Form>
     );
   }

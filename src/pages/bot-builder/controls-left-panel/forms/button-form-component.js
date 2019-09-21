@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
+import SaveAnswerInVariable from './common/save-answer-to-variable';
 
 import './forms.scss';
 
@@ -14,6 +15,7 @@ export class ButtonComponent extends Component {
       element: { ...this.props.element},
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
+    this.onFieldUpdate = this.onFieldUpdate.bind(this);
   }
   onQuillTextChangehandler(text, variable) {
     const element = elementTextChange({...this.state.element}, text, variable) ;
@@ -89,6 +91,14 @@ export class ButtonComponent extends Component {
       </button>
     </div>);
   }
+
+  onFieldUpdate(field, val) {
+    const element = {...this.state.element};
+    element[field]= val;
+    this.setState({
+      element
+    });
+  }
   
   render() {
     return(
@@ -107,11 +117,10 @@ export class ButtonComponent extends Component {
           this.getAddNewButton()
         }
         <div className="check-box-container">
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
-          </Form.Label>
-        </Form.Group>
+        <SaveAnswerInVariable 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage

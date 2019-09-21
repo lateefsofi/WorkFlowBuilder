@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
+import SaveAnswerInVariable from './common/save-answer-to-variable';
 
 import './forms.scss';
 
@@ -14,6 +15,7 @@ export class ScaleFormComponent extends Component {
       element: this.props.element,
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
+    this.onFieldUpdate = this.onFieldUpdate.bind(this);
   }
   onQuillTextChangehandler(text, variable) {
     const element = elementTextChange({...this.state.element}, text, variable) ;
@@ -43,6 +45,14 @@ export class ScaleFormComponent extends Component {
   scaleSteps(steps) {
     return steps.map((item, i) => <option key={`scale-step-${i}`} value={item}> { item } </option>)
   }
+
+  onFieldUpdate(field, val) {
+    const element = {...this.state.element};
+    element[field]= val;
+    this.setState({
+      element
+    });
+  }
   
   render() {
     return(
@@ -61,11 +71,10 @@ export class ScaleFormComponent extends Component {
             { this.scaleSteps([5, 10, 15, 20]) }
           </Form.Control>
         </Form.Group>
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isSaveInVariable} onChange={e=>this.onCheckBoxChange('isSaveInVariable', e)} /> Save Answer to a Variable
-          </Form.Label>
-        </Form.Group>
+        <SaveAnswerInVariable 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={this.state.element.isEnableLabels} onChange={e=>this.onCheckBoxChange('isEnableLabels', e)} /> Enable Labels
