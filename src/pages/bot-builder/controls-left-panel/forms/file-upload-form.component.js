@@ -4,6 +4,8 @@ import { Form, Button } from 'react-bootstrap';
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
+import CustomiseValidationMessage from './common/customise-validation-message';
+import AllowedFileTypes from './common/allowed-file-types';
 
 import './forms.scss';
 
@@ -70,16 +72,14 @@ export class FileUploadFormComponent extends Component {
               <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
             </Form.Label>
           </Form.Group>
-          <Form.Group check="true" inline="true">
-            <Form.Label check="true">
-              <Form.Control type="checkbox" checked={this.state.element.isFileUploadValidation} onChange={e=>this.onCheckBoxChange('isFileUploadValidation', e)} /> Set File Upload Validation
-            </Form.Label>
-          </Form.Group>
-          <Form.Group check="true" inline="true">
-            <Form.Label check="true">
-              <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation Messages
-            </Form.Label>
-          </Form.Group>
+          <AllowedFileTypes 
+            {...this.state.element}
+            onFieldUpdate={this.onFieldUpdate}
+          />
+          <CustomiseValidationMessage 
+            {...this.state.element}
+            onFieldUpdate={this.onFieldUpdate}
+          />
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>

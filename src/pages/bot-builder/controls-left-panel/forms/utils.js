@@ -19,3 +19,5 @@ export const elementTextChange = (element, text, variable) => {
     }
     return element;
 }
+
+export const minMaxValCheck = ({ maxNumValue, minNumValue }) => ~~maxNumValue < ~~minNumValue;

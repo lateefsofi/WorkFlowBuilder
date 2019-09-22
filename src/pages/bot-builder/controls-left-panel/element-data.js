@@ -38,14 +38,19 @@ export const controlsData = [
     {value: "Yes", next: null},
     {value: "No", next: null}
     ], isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false },
-  { icon: 'file', type: TYPES.FILE, name: 'File', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false, 
-    isFileUploadValidation: false, fileTypes: [
-      {text: '.pdf', isAllowed: false},
-      {text: '.doc', isAllowed: false},
-      {text: '.ppt', isAllowed: false},
-      {text: '.txt', isAllowed: false}
-    ], 
-    isCustValidationMsg: false 
+  { icon: 'file', type: TYPES.FILE, name: 'File', text:'', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false, 
+    isFileUploadValidation: false, fileTypes: {
+      '.pdf': false,
+      '.doc': false,
+      '.ppt': false,
+      '.txt': false,
+    },
+    isCustValidationMsg: false, validationMessages:{
+      allowedFileTypes: {
+        placeholder: '',
+        text: 'Please upload valid file type.'
+      }
+    }
   },
   { icon: 'rating', type: TYPES.RATING, name: 'Rating' },
   { icon: 'button', type: TYPES.BUTTON, name: 'Button', text: '', options: [{value: '', next: null}], variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },

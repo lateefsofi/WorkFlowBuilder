@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
-import { cleanUnusedvariables, elementTextChange } from './utils';
+import { cleanUnusedvariables, elementTextChange, minMaxValCheck } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
+import SetMinMaxValue from './common/set-min-max-value';
+import CustomiseValidationMessage from './common/customise-validation-message';
 
 import './forms.scss';
 
@@ -32,7 +34,7 @@ export class NumberFormComponent extends Component {
   }
   onFormSubmitHandler(e, element) {
     e.preventDefault();
-    if(!element.text || element.text===window.quillDefaultText) {
+    if(!element.text || element.text===window.quillDefaultText || minMaxValCheck(this.state.element)) {
       this.setState({
         isFormDirty: true
       })
@@ -65,16 +67,14 @@ export class NumberFormComponent extends Component {
           {...this.state.element}
           onFieldUpdate={this.onFieldUpdate}
         />
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-          <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation message
-          </Form.Label>
-        </Form.Group>
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-          <Form.Control type="checkbox" checked={this.state.element.isSetMinMaxNum} onChange={e=>this.onCheckBoxChange('isSetMinMaxNum', e)} /> Set Minimum & Maximum number
-          </Form.Label>
-        </Form.Group>
+        <SetMinMaxValue 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
+        <CustomiseValidationMessage 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>

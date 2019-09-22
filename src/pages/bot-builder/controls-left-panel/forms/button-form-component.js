@@ -117,10 +117,10 @@ export class ButtonComponent extends Component {
           this.getAddNewButton()
         }
         <div className="check-box-container">
-        <SaveAnswerInVariable 
-          {...this.state.element}
-          onFieldUpdate={this.onFieldUpdate}
-        />
+          <SaveAnswerInVariable 
+            {...this.state.element}
+            onFieldUpdate={this.onFieldUpdate}
+          />
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage

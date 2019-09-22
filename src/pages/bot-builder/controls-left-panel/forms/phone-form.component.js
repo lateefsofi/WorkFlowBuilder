@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
+import CustomiseValidationMessage from './common/customise-validation-message';
 
 import './forms.scss';
 
@@ -71,11 +72,15 @@ export class PhoneFormComponent extends Component {
             <Form.Control type="checkbox" checked={this.state.element.isEnableCountryCode} onChange={e=>this.onCheckBoxChange('isEnableCountryCode', e)} /> Enable country code field
           </Form.Label>
         </Form.Group>
-        <Form.Group check="true" inline="true">
+        {/* <Form.Group check="true" inline="true">
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation message
           </Form.Label>
-        </Form.Group>
+        </Form.Group> */}
+        <CustomiseValidationMessage 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         </div>
         <div className="actions">
           <Button type="submit" color="primary">Apply</Button>
