@@ -3,15 +3,50 @@ import { TYPES } from '../../../shared/constants/bot-control-types.constants';
 export const controlsData = [
   { icon: 'message', type: TYPES.MESSAGE, name: 'Message', messages: [{text: ""}], placeholder: 'Type your message here' },
   { icon: 'profile', type: TYPES.NAME, name: 'Name', text:'', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },
-  { icon: 'email', type: TYPES.EMAIL, name: 'Email', text: '', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isDisableNonBusinessEmails: false, isCustValidationMsg: false, validationMessage: '' },
-  { icon: 'phone', type: TYPES.PHONE, name: 'Phone', text: '', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isEnableCountryCode: false, isCustValidationMsg: false, validationMessage: '' },
-  { icon: 'number', type: TYPES.NUMBER, name: 'Number', text: '', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isSetMinMaxNum: false, isCustValidationMsg: false, validationMessage: '' },
+  { icon: 'email', type: TYPES.EMAIL, name: 'Email', text: '', placeholder: '', 
+    isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', 
+    isDisableNonBusinessEmails: false, 
+    isCustValidationMsg: false, validationMessages:{
+      businessEmailValidationMsg: {
+        placeholder: 'Email error message',
+        text: 'Please enter a valid bussiness email'
+      }
+    }
+  },
+  { icon: 'phone', type: TYPES.PHONE, name: 'Phone', text: '', placeholder: '', 
+    isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', 
+    isEnableCountryCode: false, 
+    isCustValidationMsg: false, validationMessages:{
+      phoneValidationMsg: {
+        placeholder: '',
+        text: 'Please enter phone number'
+      }
+    } },
+  { icon: 'number', type: TYPES.NUMBER, name: 'Number', 
+    text: '', placeholder: '', 
+    isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', 
+    isSetMinMaxNum: false, minNumValue:'', maxNumValue: '', 
+    isCustValidationMsg: false, validationMessages:{
+      minMaxNumValidationMsg: {
+        placeholder: 'Minimum and Maximum validation message',
+        text: ''
+      }
+    } 
+  },
   { icon: 'yesno', type: TYPES.YESNO, name: 'Yes/No', text: '',
     options: [
     {value: "Yes", next: null},
     {value: "No", next: null}
     ], isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false },
-  { icon: 'file', type: TYPES.FILE, name: 'File', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false, isFileUploadValidation: false, isCustValidationMsg: false },
+  { icon: 'file', type: TYPES.FILE, name: 'File', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false, 
+    isFileUploadValidation: false, fileTypes: [
+      {text: '.pdf', isAllowed: false},
+      {text: '.doc', isAllowed: false},
+      {text: '.ppt', isAllowed: false},
+      {text: '.txt', isAllowed: false}
+    ], 
+    isCustValidationMsg: false 
+  },
   { icon: 'rating', type: TYPES.RATING, name: 'Rating' },
   { icon: 'button', type: TYPES.BUTTON, name: 'Button', text: '', options: [{value: '', next: null}], variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },
   { icon: 'address', type: TYPES.ADDRESS, name: 'Address', text: '', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },
