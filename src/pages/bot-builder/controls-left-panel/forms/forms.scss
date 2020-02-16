@@ -5,6 +5,8 @@
   width: 232px;
   overflow: hidden;
   position: relative;
+  height: 96%;
+  overflow-y: scroll;
   .header-title{
     font-size: 16px;
     font-weight: normal;
@@ -177,6 +179,12 @@
   }
 }
 
+.cust-answer-in-variable {
+  &.check-box-container {
+    margin: 0px;
+  }
+}
+
 .min-max-value-container {
   label{
     min-width: 64px;;
@@ -229,9 +237,73 @@
   }
 }
 
+.max-file-limit-container {
+  font-size: 12px;
+  input{
+    font-size: 15px;
+    display: inline-block;
+    height: 32px;
+    width: 50px;
+    margin: 0 15px 10px;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+.scale-labels-container {
+  font-size: 12px;
+  label{
+    width: 50px;
+  }
+  input{
+    font-size: 12px;
+    width: 120px;
+    display: inline-block;
+    height: 32px;
+    margin-bottom: 10px;
+  }
+}
+
+.default-country-code-container {
+  .btn-primary {
+    background: #fff;
+    color: #000;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    margin-bottom: 0px;
+  }
+  .dropdown-toggle::after{
+    float: right;
+    margin-top: 8px;
+  }
+  figure {
+    margin-bottom: 0px;
+    display: inline-block;
+    img{
+      width: 20px;
+      margin-right: 10px;
+    }
+    figcaption{
+      display: inline-block;
+    }
+  }
+  .dropdown-divider{
+    margin: 4px 0px;
+  }
+  .dropdown-item{
+    padding: 0px 10px;
+  }
+}
+
 .help-text {
   font-size: 12px;
   color: red;
+}
+
+.message-text{
+  font-size: 12px;
 }
 
 .allowed-file-types-conatiner {

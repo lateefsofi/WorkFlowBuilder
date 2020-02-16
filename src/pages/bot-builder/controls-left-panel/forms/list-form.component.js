@@ -99,6 +99,7 @@ export class ListFormComponent extends Component {
             </Form.Label>
           </Form.Group>
           <SaveAnswerInVariable 
+            className="cust-answer-in-variable"
             {...this.state.element}
             onFieldUpdate={this.onFieldUpdate}
           />        

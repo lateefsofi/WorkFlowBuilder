@@ -11,6 +11,9 @@ export const controlsData = [
         placeholder: 'Email error message',
         text: 'Please enter a valid bussiness email'
       }
+    },
+    nonBusinessEmailTypes: {
+      'gmail': false, 'yahoo': false, 'ymail': false, 'outlook': false, 'iCloud': false
     }
   },
   { icon: 'phone', type: TYPES.PHONE, name: 'Phone', text: '', placeholder: '', 
@@ -38,13 +41,16 @@ export const controlsData = [
     {value: "Yes", next: null},
     {value: "No", next: null}
     ], isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false },
-  { icon: 'file', type: TYPES.FILE, name: 'File', text:'', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isAssignToLeadQualificationStage: false, 
+  { icon: 'file', type: TYPES.FILE, name: 'File', text:'', 
+    isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', 
+    isAssignToLeadQualificationStage: false, 
     isFileUploadValidation: false, fileTypes: {
       '.pdf': false,
       '.doc': false,
       '.ppt': false,
       '.txt': false,
     },
+    isEnableFileSizeLimit: false, maxFileSizeLimit: 1, systemFileSizeLimit: 10,
     isCustValidationMsg: false, validationMessages:{
       allowedFileTypes: {
         placeholder: '',
@@ -55,7 +61,10 @@ export const controlsData = [
   { icon: 'rating', type: TYPES.RATING, name: 'Rating' },
   { icon: 'button', type: TYPES.BUTTON, name: 'Button', text: '', options: [{value: '', next: null}], variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },
   { icon: 'address', type: TYPES.ADDRESS, name: 'Address', text: '', placeholder: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'' },
-  { icon: 'scale', type: TYPES.SCALE, name: 'Scale', placeholder: '', text: '', isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', isEnableLabels: false },
+  { icon: 'scale', type: TYPES.SCALE, name: 'Scale', placeholder: '', text: '', 
+    isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:'', 
+    isEnableLabels: false, leftLabel: 'Worst', rightLabel: 'Best',
+    selectedStep: 5 },
   { icon: 'list', type: TYPES.LIST, name: 'List', text: '', list: [], isEnableSearch: false, isEnableMultiSelect: false, isSaveInVariable: false, variableName: '', isAddFallBackValue: false, variableFallBackValue:''}
 ];
 

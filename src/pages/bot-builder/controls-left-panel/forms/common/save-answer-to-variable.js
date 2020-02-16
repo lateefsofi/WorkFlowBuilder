@@ -28,10 +28,11 @@ export class SaveAnswerInVariable extends Component {
       isAddFallBackValue,
       variableName,
       variableFallBackValue,
-      onFieldUpdate
+      onFieldUpdate,
+      className
     } = this.props;
     return(
-      <div className="check-box-container">
+      <div className={`check-box-container ${className}`}>
         <Form.Group check="true" inline="true">
           <Form.Label check="true">
             <Form.Control type="checkbox" checked={isSaveInVariable} onChange={e=>onFieldUpdate('isSaveInVariable', e.target.checked)} /> Save Answer to a Variable

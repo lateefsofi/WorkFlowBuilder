@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
 import CustomiseValidationMessage from './common/customise-validation-message';
+import DefaultContryCode from './common/default-country-code';
+import { getCountries } from '../../../../store/meta-data/actions';
 
 import './forms.scss';
 
@@ -17,7 +20,13 @@ export class PhoneFormComponent extends Component {
     }
     this.onQuillTextChangehandler = this.onQuillTextChangehandler.bind(this);
     this.onFieldUpdate = this.onFieldUpdate.bind(this);
+    this.setSelectedCountry = this.setSelectedCountry.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getCountries();
+  }
+
   onQuillTextChangehandler(text, variable) {
     const element = elementTextChange({...this.state.element}, text, variable) ;
     this.setState({
@@ -51,8 +60,15 @@ export class PhoneFormComponent extends Component {
       element
     });
   }
+
+  setSelectedCountry(selectedCountry) {
+    this.setState({
+      selectedCountry
+    })
+  }
   
   render() {
+    console.log("countries: ", this.props.countries)
     return(
       <Form className="element-form" onSubmit={e=>this.onFormSubmitHandler(e, this.state.element)}  noValidate>
         <div className="header-title">Phone block</div>
@@ -67,16 +83,13 @@ export class PhoneFormComponent extends Component {
           {...this.state.element}
           onFieldUpdate={this.onFieldUpdate}
         />
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isEnableCountryCode} onChange={e=>this.onCheckBoxChange('isEnableCountryCode', e)} /> Enable country code field
-          </Form.Label>
-        </Form.Group>
-        {/* <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isCustValidationMsg} onChange={e=>this.onCheckBoxChange('isCustValidationMsg', e)} /> Customise validation message
-          </Form.Label>
-        </Form.Group> */}
+        <DefaultContryCode 
+          countries={this.props.countries}
+          selectedCountry={this.state.selectedCountry}
+          setSelectedCountry={this.setSelectedCountry}
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate}
+        />
         <CustomiseValidationMessage 
           {...this.state.element}
           onFieldUpdate={this.onFieldUpdate}
@@ -91,4 +104,8 @@ export class PhoneFormComponent extends Component {
   }
 }
 
-export default PhoneFormComponent;
+const mapStateToProps = state => ({
+  countries: state.MetaDataReducer.countries
+})
+
+export default connect(mapStateToProps, { getCountries })(PhoneFormComponent);

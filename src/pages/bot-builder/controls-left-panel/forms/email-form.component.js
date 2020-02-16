@@ -5,6 +5,7 @@ import { QuilEditor } from './quiil-editor.component';
 import { cleanUnusedvariables, elementTextChange } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
 import CustomiseValidationMessage from './common/customise-validation-message';
+import DisableNonBusinessEmails from './common/disable-non-business-email';
 
 import './forms.scss';
 
@@ -66,11 +67,10 @@ export class EmailFormComponent extends Component {
           {...this.state.element}
           onFieldUpdate={this.onFieldUpdate}
         />
-        <Form.Group check="true" inline="true">
-          <Form.Label check="true">
-            <Form.Control type="checkbox" checked={this.state.element.isDisableNonBusinessEmails} onChange={e=>this.onCheckBoxChange('isDisableNonBusinessEmails', e)} /> Disable Non-Business Emails
-          </Form.Label>
-        </Form.Group>
+        <DisableNonBusinessEmails 
+          {...this.state.element}
+          onFieldUpdate={this.onFieldUpdate} 
+        />
         <CustomiseValidationMessage 
           {...this.state.element}
           onFieldUpdate={this.onFieldUpdate}

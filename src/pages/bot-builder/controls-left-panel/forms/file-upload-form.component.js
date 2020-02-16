@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 import { QuilEditor } from './quiil-editor.component';
-import { cleanUnusedvariables, elementTextChange } from './utils';
+import { cleanUnusedvariables, elementTextChange, isInvalidMaxFileSize } from './utils';
 import SaveAnswerInVariable from './common/save-answer-to-variable';
 import CustomiseValidationMessage from './common/customise-validation-message';
 import AllowedFileTypes from './common/allowed-file-types';
+import MaxFileSizeLimit from './common/max-file-size-limit';
 
 import './forms.scss';
 
@@ -34,7 +35,7 @@ export class FileUploadFormComponent extends Component {
   }
   onFormSubmitHandler(e, element) {
     e.preventDefault();
-    if(!element.text || element.text===window.quillDefaultText) {
+    if(!element.text || element.text===window.quillDefaultText || isInvalidMaxFileSize(element)) {
       this.setState({
         isFormDirty: true
       })
@@ -67,12 +68,16 @@ export class FileUploadFormComponent extends Component {
             {...this.state.element}
             onFieldUpdate={this.onFieldUpdate}
           />
-          <Form.Group check="true" inline="true">
+          {/* <Form.Group check="true" inline="true">
             <Form.Label check="true">
               <Form.Control type="checkbox" checked={this.state.element.isAssignToLeadQualificationStage} onChange={e=>this.onCheckBoxChange('isAssignToLeadQualificationStage', e)} /> Assign to Lead Qualification Stage
             </Form.Label>
-          </Form.Group>
+          </Form.Group> */}
           <AllowedFileTypes 
+            {...this.state.element}
+            onFieldUpdate={this.onFieldUpdate}
+          />
+          <MaxFileSizeLimit 
             {...this.state.element}
             onFieldUpdate={this.onFieldUpdate}
           />

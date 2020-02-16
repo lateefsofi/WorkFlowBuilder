@@ -21,3 +21,4 @@ export const elementTextChange = (element, text, variable) => {
 }
 
 export const minMaxValCheck = ({ maxNumValue, minNumValue }) => ~~maxNumValue < ~~minNumValue;
+export const isInvalidMaxFileSize = ({isEnableFileSizeLimit, maxFileSizeLimit, systemFileSizeLimit}) => isEnableFileSizeLimit && (~~maxFileSizeLimit<=0 || ~~maxFileSizeLimit>~~systemFileSizeLimit);

@@ -4,7 +4,8 @@ export const endPoints = {
     REGISTER: '/account',
     USER: '/user',
     BOT_BUILDER: '/bot-builder',
-    CHAT_MESSAGE: '/message'
+    CHAT_MESSAGE: '/message',
+    COUNTRIES: '/meta-data/countries'
 }
 
 export default endPoints;
